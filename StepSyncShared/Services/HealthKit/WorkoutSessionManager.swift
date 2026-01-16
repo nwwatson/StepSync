@@ -38,6 +38,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
     private var pausedTime: TimeInterval = 0
     private var lastPauseDate: Date?
     private var isMirroredSession: Bool = false
+    private var isMirroringToCompanion: Bool = false
     private var metricsSendTimer: Timer?
 
     private override init() {
@@ -120,7 +121,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
 
     /// Sends current workout metrics to the paired iPhone
     private func sendMetricsToPhone() {
-        guard isMirroredSession, let session = session else { return }
+        guard (isMirroredSession || isMirroringToCompanion), let session = session else { return }
 
         let metrics = WorkoutMetricsData(
             distance: distance,
@@ -171,11 +172,15 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
             try await builder?.beginCollection(at: startDate)
 
             // Enable mirroring to iPhone companion app
-            session?.startMirroringToCompanionDevice { success, error in
+            session?.startMirroringToCompanionDevice { [weak self] success, error in
                 if let error = error {
                     print("WorkoutSessionManager: Failed to start mirroring: \(error)")
                 } else if success {
                     print("WorkoutSessionManager: Started mirroring to companion device")
+                    DispatchQueue.main.async {
+                        self?.isMirroringToCompanion = true
+                        self?.startMetricsSendTimer()
+                    }
                 }
             }
 
@@ -247,6 +252,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         builder = nil
         stopMetricsSendTimer()
         isMirroredSession = false
+        isMirroringToCompanion = false
         #endif
         isSessionActive = false
         isPaused = false
