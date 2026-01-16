@@ -70,10 +70,17 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         session = mirroredSession
         builder = mirroredSession.associatedWorkoutBuilder()
 
-        builder?.dataSource = HKLiveWorkoutDataSource(
+        let dataSource = HKLiveWorkoutDataSource(
             healthStore: healthStore,
             workoutConfiguration: mirroredSession.workoutConfiguration
         )
+
+        // Explicitly enable step count collection (not automatically collected)
+        if let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
+            dataSource.enableCollection(for: stepCountType, predicate: nil)
+        }
+
+        builder?.dataSource = dataSource
 
         session?.delegate = self
         builder?.delegate = self
@@ -159,10 +166,17 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
 
-            builder?.dataSource = HKLiveWorkoutDataSource(
+            let dataSource = HKLiveWorkoutDataSource(
                 healthStore: healthStore,
                 workoutConfiguration: configuration
             )
+
+            // Explicitly enable step count collection (not automatically collected)
+            if let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
+                dataSource.enableCollection(for: stepCountType, predicate: nil)
+            }
+
+            builder?.dataSource = dataSource
 
             session?.delegate = self
             builder?.delegate = self
