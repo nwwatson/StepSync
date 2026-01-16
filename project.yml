@@ -11,7 +11,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "6.0"
-    DEVELOPMENT_TEAM: "6LC7EQ5F2W"
+    DEVELOPMENT_TEAM: "Nicholas Watson"
     CODE_SIGN_STYLE: Automatic
 
 targets:

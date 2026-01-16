@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -158,7 +158,7 @@
 		0594EE5F89F2E73C9A9085C4 /* TrendAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendAnalyzer.swift; sourceTree = "<group>"; };
 		08752E8147AD2A1301F31161 /* StepSyncWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncWidgets.swift; sourceTree = "<group>"; };
 		0DF843716BF4587BE79BDA6F /* WatchSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSummaryView.swift; sourceTree = "<group>"; };
-		11F5DF6110D39647B7C36C6B /* StepSyncWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = StepSyncWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		11F5DF6110D39647B7C36C6B /* StepSyncWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StepSyncWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		1722FF4C41DB91EE38241BA1 /* StepHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepHistoryView.swift; sourceTree = "<group>"; };
 		18FA06FB36ADE1392E8D0ED1 /* WorkoutMirroringManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMirroringManager.swift; sourceTree = "<group>"; };
 		251834999B5DE6FF62E41CDC /* StepCountComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountComplication.swift; sourceTree = "<group>"; };
@@ -174,10 +174,10 @@
 		414E84BB340D6DAF0287C8AA /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		4617766756B3D1838B005EF6 /* DailyStepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStepRecord.swift; sourceTree = "<group>"; };
 		4833C635E86BE562839CAEB7 /* PulsingLocationMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsingLocationMarker.swift; sourceTree = "<group>"; };
-		4EF088DA5E6704D72F5D7B21 /* StepSyncTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = StepSyncTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EF088DA5E6704D72F5D7B21 /* StepSyncTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StepSyncTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		507C6AC8C714D3004389B8C2 /* StepSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncApp.swift; sourceTree = "<group>"; };
 		548AD23161466182141BC9A7 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
-		56BEDFEBA6DD47063E808711 /* StepSync.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = StepSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		56BEDFEBA6DD47063E808711 /* StepSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StepSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		619EB00206311DE7D8DBD4A2 /* StepSyncWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncWatchApp.swift; sourceTree = "<group>"; };
 		64F48F4938DC62F2A41DDCBA /* StepSyncWatchWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncWatchWidgets.swift; sourceTree = "<group>"; };
 		69EE6E1BC1242D763230E423 /* QuickStartWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStartWidget.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		CDDE60EB517755163A49BB5F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		DCC157AAB68C57ED80A10A36 /* StepProgressWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepProgressWidget.swift; sourceTree = "<group>"; };
 		DED2D5FFE494B543573B7067 /* Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streak.swift; sourceTree = "<group>"; };
-		F01DD81CB53571454D1CBBB4 /* StepSyncIntents.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = StepSyncIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F01DD81CB53571454D1CBBB4 /* StepSyncIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StepSyncIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F33D159B174208D9A99DB182 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9BDB8B160F2FFD64CA8690F /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -728,27 +728,21 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					21280079F968AF8D70EBCEAA = {
-						DevelopmentTeam = 6LC7EQ5F2W;
 						ProvisioningStyle = Automatic;
 					};
 					23238C2789BA9F33BBFBF453 = {
-						DevelopmentTeam = 6LC7EQ5F2W;
 						ProvisioningStyle = Automatic;
 					};
 					52248B3BC09A3E6280F8F30C = {
-						DevelopmentTeam = 6LC7EQ5F2W;
 						ProvisioningStyle = Automatic;
 					};
 					791A47EACC1769E647E75D30 = {
-						DevelopmentTeam = 6LC7EQ5F2W;
 						ProvisioningStyle = Automatic;
 					};
 					8AA6BBFADDA97FFBAAF15B7E = {
-						DevelopmentTeam = 6LC7EQ5F2W;
 						ProvisioningStyle = Automatic;
 					};
 					E2EEB87F741DF98806607AAD = {
-						DevelopmentTeam = 6LC7EQ5F2W;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -763,7 +757,6 @@
 			);
 			mainGroup = 4F03F2C6BADD6FF75F409664;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -951,6 +944,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StepSyncIntents/StepSyncIntents.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncIntents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -968,6 +962,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StepSyncWatch/Resources/StepSyncWatch.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncWatch/Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.watchkitapp;
 				SDKROOT = watchos;
@@ -982,6 +977,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StepSync/Resources/StepSync.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSync/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1062,6 +1058,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StepSyncWidgets/StepSyncWidgets.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncWidgets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1078,6 +1075,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StepSyncIntents/StepSyncIntents.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncIntents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1095,6 +1093,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StepSyncWatch/Resources/StepSyncWatch.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncWatch/Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.watchkitapp;
 				SDKROOT = watchos;
@@ -1165,6 +1164,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StepSyncWidgets/StepSyncWidgets.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncWidgets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1181,6 +1181,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1197,6 +1198,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StepSyncWatchWidgets/StepSyncWatchWidgets.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncWatchWidgets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1214,6 +1216,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1230,6 +1233,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = StepSyncWatchWidgets/StepSyncWatchWidgets.entitlements;
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSyncWatchWidgets/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1249,6 +1253,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = StepSync/Resources/StepSync.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 82WMU44KC8;
 				INFOPLIST_FILE = StepSync/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
