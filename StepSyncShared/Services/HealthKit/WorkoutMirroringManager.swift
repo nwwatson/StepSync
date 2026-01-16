@@ -19,6 +19,7 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     public private(set) var mirroringError: Error?
     public private(set) var currentWorkoutType: WorkoutType?
     public private(set) var currentWorkoutEnvironment: WorkoutEnvironment?
+    public private(set) var isWatchInitiatedWorkout = false
 
     // Metrics received from watch
     public private(set) var elapsedTime: TimeInterval = 0
@@ -35,7 +36,50 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
 
     private override init() {
         super.init()
+        #if os(iOS)
+        setupWatchWorkoutHandler()
+        #endif
     }
+
+    #if os(iOS)
+    /// Sets up the handler for receiving workout sessions started on Apple Watch
+    private func setupWatchWorkoutHandler() {
+        healthStore.workoutSessionMirroringStartHandler = { [weak self] mirroredSession in
+            Task { @MainActor in
+                self?.handleWatchInitiatedWorkout(mirroredSession)
+            }
+        }
+    }
+
+    /// Handles a workout session that was initiated on Apple Watch
+    @MainActor
+    private func handleWatchInitiatedWorkout(_ session: HKWorkoutSession) {
+        guard !isMirroring else {
+            print("WorkoutMirroringManager: Cannot start watch workout - session already active")
+            return
+        }
+
+        mirroredSession = session
+        session.delegate = self
+
+        // Extract workout type from configuration
+        let activityType = session.workoutConfiguration.activityType
+        currentWorkoutType = activityType == .running ? .running : .walking
+
+        let locationType = session.workoutConfiguration.locationType
+        currentWorkoutEnvironment = locationType == .indoor ? .indoor : .outdoor
+
+        isMirroring = true
+        isWatchInitiatedWorkout = true
+        sessionStartDate = Date()
+        mirroringError = nil
+
+        resetMetrics()
+        startMetricsTimer()
+
+        print("WorkoutMirroringManager: Started receiving watch-initiated workout session")
+    }
+    #endif
 
     #if os(iOS)
     private var builder: HKLiveWorkoutBuilder?
@@ -132,6 +176,7 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
         builder = nil
         #endif
         isMirroring = false
+        isWatchInitiatedWorkout = false
         currentWorkoutType = nil
         currentWorkoutEnvironment = nil
         sessionStartDate = nil

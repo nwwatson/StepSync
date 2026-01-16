@@ -38,6 +38,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
     private var pausedTime: TimeInterval = 0
     private var lastPauseDate: Date?
     private var isMirroredSession: Bool = false
+    private var isMirroringToCompanion: Bool = false
     private var metricsSendTimer: Timer?
 
     private override init() {
@@ -69,10 +70,17 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         session = mirroredSession
         builder = mirroredSession.associatedWorkoutBuilder()
 
-        builder?.dataSource = HKLiveWorkoutDataSource(
+        let dataSource = HKLiveWorkoutDataSource(
             healthStore: healthStore,
             workoutConfiguration: mirroredSession.workoutConfiguration
         )
+
+        // Explicitly enable step count collection (not automatically collected)
+        if let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
+            dataSource.enableCollection(for: stepCountType, predicate: nil)
+        }
+
+        builder?.dataSource = dataSource
 
         session?.delegate = self
         builder?.delegate = self
@@ -120,7 +128,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
 
     /// Sends current workout metrics to the paired iPhone
     private func sendMetricsToPhone() {
-        guard isMirroredSession, let session = session else { return }
+        guard (isMirroredSession || isMirroringToCompanion), let session = session else { return }
 
         let metrics = WorkoutMetricsData(
             distance: distance,
@@ -158,10 +166,17 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
             session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
             builder = session?.associatedWorkoutBuilder()
 
-            builder?.dataSource = HKLiveWorkoutDataSource(
+            let dataSource = HKLiveWorkoutDataSource(
                 healthStore: healthStore,
                 workoutConfiguration: configuration
             )
+
+            // Explicitly enable step count collection (not automatically collected)
+            if let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
+                dataSource.enableCollection(for: stepCountType, predicate: nil)
+            }
+
+            builder?.dataSource = dataSource
 
             session?.delegate = self
             builder?.delegate = self
@@ -169,6 +184,19 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
             let startDate = Date()
             session?.startActivity(with: startDate)
             try await builder?.beginCollection(at: startDate)
+
+            // Enable mirroring to iPhone companion app
+            session?.startMirroringToCompanionDevice { [weak self] success, error in
+                if let error = error {
+                    print("WorkoutSessionManager: Failed to start mirroring: \(error)")
+                } else if success {
+                    print("WorkoutSessionManager: Started mirroring to companion device")
+                    DispatchQueue.main.async {
+                        self?.isMirroringToCompanion = true
+                        self?.startMetricsSendTimer()
+                    }
+                }
+            }
 
             isSessionActive = true
             currentWorkoutType = type
@@ -238,6 +266,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         builder = nil
         stopMetricsSendTimer()
         isMirroredSession = false
+        isMirroringToCompanion = false
         #endif
         isSessionActive = false
         isPaused = false

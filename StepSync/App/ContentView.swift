@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(WorkoutMirroringManager.self) private var mirroringManager
+
     @State private var selectedTab: Tab = .dashboard
 
     enum Tab: String, CaseIterable {
@@ -64,9 +66,18 @@ struct ContentView: View {
                 .tag(Tab.settings)
         }
         .tint(.primary)
+        .fullScreenCover(isPresented: .init(
+            get: { mirroringManager.isWatchInitiatedWorkout && mirroringManager.isMirroring },
+            set: { _ in }
+        )) {
+            NavigationStack {
+                WatchWorkoutCompanionView()
+            }
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .environment(WorkoutMirroringManager.shared)
 }

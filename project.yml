@@ -11,7 +11,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: "6.0"
-    DEVELOPMENT_TEAM: "6LC7EQ5F2W"
+    DEVELOPMENT_TEAM: "Nicholas Watson"
     CODE_SIGN_STYLE: Automatic
 
 targets:
@@ -139,6 +139,17 @@ targets:
         com.apple.security.application-groups:
           - group.com.nwwsolutions.steppingszn
 
+  StepSyncTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: StepSyncTests
+    dependencies:
+      - target: StepSync
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nwwsolutions.stepsync.tests
+
 schemes:
   StepSync:
     build:
@@ -146,10 +157,13 @@ schemes:
         StepSync: all
         StepSyncWidgets: all
         StepSyncIntents: all
+        StepSyncTests: [test]
     run:
       config: Debug
     test:
       config: Debug
+      targets:
+        - StepSyncTests
     profile:
       config: Release
     analyze:
