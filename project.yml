@@ -1,0 +1,193 @@
+name: StepSync
+options:
+  bundleIdPrefix: com.nwwsolutions
+  deploymentTarget:
+    iOS: "26.0"
+    watchOS: "26.0"
+  xcodeVersion: "26.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: "6LC7EQ5F2W"
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  StepSync:
+    type: application
+    platform: iOS
+    sources:
+      - path: StepSync
+        excludes:
+          - "**/*.plist"
+          - "**/*.entitlements"
+      - path: StepSyncShared
+        excludes:
+          - "**/*.plist"
+    dependencies:
+      - target: StepSyncWidgets
+        embed: embed-without-signing
+      - target: StepSyncIntents
+        embed: embed-without-signing
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nwwsolutions.stepsync
+        INFOPLIST_FILE: StepSync/Resources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    entitlements:
+      path: StepSync/Resources/StepSync.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+        com.apple.security.application-groups:
+          - group.com.nwwsolutions.steppingszn
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.nwwsolutions.stepsync
+        com.apple.developer.icloud-services:
+          - CloudKit
+
+  StepSyncWatch:
+    type: application
+    platform: watchOS
+    sources:
+      - path: StepSyncWatch
+        excludes:
+          - "**/*.plist"
+          - "**/*.entitlements"
+      - path: StepSyncShared
+        excludes:
+          - "**/*.plist"
+    dependencies:
+      - target: StepSyncWatchWidgets
+        embed: embed-without-signing
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nwwsolutions.stepsync.watchkitapp
+        INFOPLIST_FILE: StepSyncWatch/Resources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    entitlements:
+      path: StepSyncWatch/Resources/StepSyncWatch.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+        com.apple.security.application-groups:
+          - group.com.nwwsolutions.steppingszn
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.nwwsolutions.stepsync
+        com.apple.developer.icloud-services:
+          - CloudKit
+
+  StepSyncWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: StepSyncWidgets
+        excludes:
+          - "**/*.plist"
+          - "**/*.entitlements"
+      - path: StepSyncShared/Models
+        excludes:
+          - "**/*.plist"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nwwsolutions.stepsync.widgets
+        INFOPLIST_FILE: StepSyncWidgets/Info.plist
+    entitlements:
+      path: StepSyncWidgets/StepSyncWidgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.nwwsolutions.steppingszn
+
+  StepSyncWatchWidgets:
+    type: app-extension
+    platform: watchOS
+    sources:
+      - path: StepSyncWatchWidgets
+        excludes:
+          - "**/*.plist"
+          - "**/*.entitlements"
+      - path: StepSyncShared/Models
+        excludes:
+          - "**/*.plist"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nwwsolutions.stepsync.watchkitapp.widgets
+        INFOPLIST_FILE: StepSyncWatchWidgets/Info.plist
+    entitlements:
+      path: StepSyncWatchWidgets/StepSyncWatchWidgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.nwwsolutions.steppingszn
+
+  StepSyncIntents:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: StepSyncIntents
+        excludes:
+          - "**/*.plist"
+          - "**/*.entitlements"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nwwsolutions.stepsync.intents
+        INFOPLIST_FILE: StepSyncIntents/Info.plist
+    entitlements:
+      path: StepSyncIntents/StepSyncIntents.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.nwwsolutions.steppingszn
+
+schemes:
+  StepSync:
+    build:
+      targets:
+        StepSync: all
+        StepSyncWidgets: all
+        StepSyncIntents: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+  StepSyncWatch:
+    build:
+      targets:
+        StepSyncWatch: all
+        StepSyncWatchWidgets: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+  "StepSync (All)":
+    build:
+      targets:
+        StepSync: all
+        StepSyncWatch: all
+        StepSyncWidgets: all
+        StepSyncWatchWidgets: all
+        StepSyncIntents: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

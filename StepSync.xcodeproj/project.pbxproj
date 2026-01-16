@@ -1,0 +1,1183 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04F5DD65BC5CAB8BF05C1729 /* WatchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42EE5022974865C949AE556 /* WatchContentView.swift */; };
+		0851ED51EE0653908E201FA1 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D70F69AD9C2EC4E28DAD69D /* LocationManager.swift */; };
+		087E5A6F33469383F6328479 /* WorkoutRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466F800DC5F4FA3F9B3D814 /* WorkoutRoutePoint.swift */; };
+		0CA6BD00045CD934757DEA33 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF90135A3B521C527A2A825 /* ContentView.swift */; };
+		0ED46C89359AFA7F26A9C8C7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6488A2B67D2294BEB584BE /* SettingsView.swift */; };
+		1078761F90D9E31DD5A5DF54 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC5600BC8DB848DC91356 /* Achievement.swift */; };
+		15934FED6C856546DC79DE75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABFD9AD9FBD35592B303F360 /* Assets.xcassets */; };
+		166CF17546C706242D367D17 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19AADF8ADE70C2667CECFC /* Workout.swift */; };
+		16D6EFB40545ED72353FD8AA /* WorkoutMirroringManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FA06FB36ADE1392E8D0ED1 /* WorkoutMirroringManager.swift */; };
+		17C1B7ED3CAAB7C5A0BAFCB5 /* WorkoutRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466F800DC5F4FA3F9B3D814 /* WorkoutRoutePoint.swift */; };
+		18392A5276A787ABA74F5251 /* StepCountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DE2B023C269886C0C72B02 /* StepCountService.swift */; };
+		1953FC9E2ACD05CF4A5C65DF /* StepSyncIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2E7BFC21DC3DDC2210F50E /* StepSyncIntents.swift */; };
+		1A3B547353FD79EBE8BF6240 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18A93CE6EB05FAF1E990446 /* InsightsView.swift */; };
+		1D1B073A83B61226FA80B02F /* WorkoutRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466F800DC5F4FA3F9B3D814 /* WorkoutRoutePoint.swift */; };
+		1DEF5897BADD1DAB17E65027 /* StepSyncWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619EB00206311DE7D8DBD4A2 /* StepSyncWatchApp.swift */; };
+		22915DDAC7B7C1814DE05D39 /* WorkoutMirroringManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FA06FB36ADE1392E8D0ED1 /* WorkoutMirroringManager.swift */; };
+		233B3E958796B2A6FEBF89C3 /* StepCountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DE2B023C269886C0C72B02 /* StepCountService.swift */; };
+		2A72240B360DF520BC7A2416 /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32301399A96F7071922FB9FD /* HeartRateSample.swift */; };
+		2CA358120DB1981A17FCC256 /* StepSyncWatchWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F48F4938DC62F2A41DDCBA /* StepSyncWatchWidgets.swift */; };
+		31AEEFCCADD1DD901E995E8B /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672D93AEF6BB62A817B56A2 /* UserSettings.swift */; };
+		3664A1D8ABA0DCC8D590E894 /* StepCountComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251834999B5DE6FF62E41CDC /* StepCountComplication.swift */; };
+		3DCDB445C1028357F02C7C38 /* StepSyncWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 11F5DF6110D39647B7C36C6B /* StepSyncWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		40B99AAC9E84FB39123F8F16 /* StepGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0358AED9B5893BDE0AF898 /* StepGoal.swift */; };
+		40BA7E6F04DC3BB5918D8530 /* WorkoutRoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466F800DC5F4FA3F9B3D814 /* WorkoutRoutePoint.swift */; };
+		40E6455C1AD70B8E3714E3BE /* StepGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0358AED9B5893BDE0AF898 /* StepGoal.swift */; };
+		46872C0C6774CDE1B44A7230 /* TrendAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0594EE5F89F2E73C9A9085C4 /* TrendAnalyzer.swift */; };
+		4C3049779EFE5BB11DF9D9AB /* DailyStepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4617766756B3D1838B005EF6 /* DailyStepRecord.swift */; };
+		4C59FD25079323B0884E0645 /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2D5FFE494B543573B7067 /* Streak.swift */; };
+		4F064DD86EFE427B8FE2C887 /* WorkoutComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D7D9551DF692D50A88ADA1 /* WorkoutComplication.swift */; };
+		4FEDE9F71D3ABCCB62CA579F /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC5600BC8DB848DC91356 /* Achievement.swift */; };
+		505BC8E1304D35F2B2105FF2 /* DailyStepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4617766756B3D1838B005EF6 /* DailyStepRecord.swift */; };
+		527DB067461BE4C9ACB72BC9 /* WatchDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72BF69FC65C1525C3C8307DD /* WatchDashboardView.swift */; };
+		56620E6962C507AA61B134C4 /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2D5FFE494B543573B7067 /* Streak.swift */; };
+		58DAF42072F7F31E510F5EDF /* StepGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0358AED9B5893BDE0AF898 /* StepGoal.swift */; };
+		5F3CCA35ADA1D6C5F64EBE21 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDFF4AD4786D068DEF6A442 /* HealthKitManager.swift */; };
+		67E59D19FDC968D0A9190B59 /* StepGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0358AED9B5893BDE0AF898 /* StepGoal.swift */; };
+		6905F07069B0BA1E1725C06E /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2D5FFE494B543573B7067 /* Streak.swift */; };
+		693CBE4631376EDD7AD2DF1C /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDFF4AD4786D068DEF6A442 /* HealthKitManager.swift */; };
+		6BF6B6E89DFB88551A489BBD /* StepHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1722FF4C41DB91EE38241BA1 /* StepHistoryView.swift */; };
+		7079A71DD8F7A433D1D8E1BA /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30408CAD212F0516D67275C0 /* DashboardView.swift */; };
+		70AE5081C1A947E2F89456B7 /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD23161466182141BC9A7 /* WorkoutSessionManager.swift */; };
+		70CBB78301B05480D653CECC /* WatchWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA7ED7B84E9BAF769CB5094 /* WatchWorkoutView.swift */; };
+		73CF94C6A8706A448D23B080 /* GoalSettingsSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E567C706AD65EBC52BFA6D2 /* GoalSettingsSheet.swift */; };
+		752552D92D3AA63080F72BDB /* StepSyncWatchWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AE1FF53BCA9EC3D6312ADAEE /* StepSyncWatchWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		75CCF2A5D819F13A04F9C08B /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC5600BC8DB848DC91356 /* Achievement.swift */; };
+		7B7475C1A2936373F1020202 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDE60EB517755163A49BB5F /* NotificationService.swift */; };
+		83CA375B50C1009DC24F32CE /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672D93AEF6BB62A817B56A2 /* UserSettings.swift */; };
+		8593249371F89A8CC98C679D /* StepProgressWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC157AAB68C57ED80A10A36 /* StepProgressWidget.swift */; };
+		85F10467020CACBA3DC70926 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672D93AEF6BB62A817B56A2 /* UserSettings.swift */; };
+		87868BD67775BB1BC05BFD96 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8672D93AEF6BB62A817B56A2 /* UserSettings.swift */; };
+		8BB393084CBC0809A617F265 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D70F69AD9C2EC4E28DAD69D /* LocationManager.swift */; };
+		9516FD112E8657C67BEE227E /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BDB8B160F2FFD64CA8690F /* DashboardViewModel.swift */; };
+		97959A60DDD1A992E7635076 /* ProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333190F2AAF9BA0216319E04 /* ProgressRing.swift */; };
+		988E3D29B5F52752941F5BE5 /* StepSyncWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08752E8147AD2A1301F31161 /* StepSyncWidgets.swift */; };
+		998F91509EE279268A9BFC3F /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDE60EB517755163A49BB5F /* NotificationService.swift */; };
+		9FEB06647A3D498F14ED137D /* WorkoutSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548AD23161466182141BC9A7 /* WorkoutSessionManager.swift */; };
+		A395367029EE0083A931C9B5 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DBC5600BC8DB848DC91356 /* Achievement.swift */; };
+		B1611E15F24666DD5BD9A33E /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC8F94A6C002C09788009D /* WorkoutListView.swift */; };
+		B333B589CF488D9D19316862 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F33D159B174208D9A99DB182 /* Assets.xcassets */; };
+		B4601F99E0F67BDE1FDB164D /* DailyStepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4617766756B3D1838B005EF6 /* DailyStepRecord.swift */; };
+		B47235939085339F8A623974 /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32301399A96F7071922FB9FD /* HeartRateSample.swift */; };
+		B5DE244F45416263B0C0AC8F /* NewWorkoutSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD052C0E44FA640CB8247C7 /* NewWorkoutSheet.swift */; };
+		B6D6FA2F6CE16B476848186E /* WatchSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF843716BF4587BE79BDA6F /* WatchSummaryView.swift */; };
+		BD0C2239975E53569B9A704D /* ActiveWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045EF03085E2D6BA4B559EA9 /* ActiveWorkoutView.swift */; };
+		BF7F4F2B855F5D0F3B6B44A1 /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32301399A96F7071922FB9FD /* HeartRateSample.swift */; };
+		C10E8B27D06048E1B5E2C6C1 /* QuickStartWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EE6E1BC1242D763230E423 /* QuickStartWidget.swift */; };
+		C2C8075627D5E2DFF0605DD9 /* DailyStepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4617766756B3D1838B005EF6 /* DailyStepRecord.swift */; };
+		C933FD75818D25E0EE37482C /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19AADF8ADE70C2667CECFC /* Workout.swift */; };
+		CAAE27AB32E796D76A9D1B93 /* WorkoutDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82518F66F267A5A23803BE51 /* WorkoutDetailView.swift */; };
+		D0C3788C1BADA7DB626FD413 /* InsightsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A159FACE8486A808DC22982 /* InsightsCalculator.swift */; };
+		D1C2FE7756350DC072287A6D /* HeartRateSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32301399A96F7071922FB9FD /* HeartRateSample.swift */; };
+		DA608853D0B5CB62A3D9CCB8 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414E84BB340D6DAF0287C8AA /* Date+Extensions.swift */; };
+		DB3D34F9ACDB0B500AABD473 /* TrendAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0594EE5F89F2E73C9A9085C4 /* TrendAnalyzer.swift */; };
+		DDB452AF06061C1B6A634161 /* InsightsCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A159FACE8486A808DC22982 /* InsightsCalculator.swift */; };
+		E4147B78BDC0C76D3155AE40 /* StepSyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507C6AC8C714D3004389B8C2 /* StepSyncApp.swift */; };
+		E46E1647FA941BEB75FB6C36 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19AADF8ADE70C2667CECFC /* Workout.swift */; };
+		E78418504B377D0F9DD5851A /* StepSyncIntents.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F01DD81CB53571454D1CBBB4 /* StepSyncIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E7C0A3986E7937318D7894BC /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414E84BB340D6DAF0287C8AA /* Date+Extensions.swift */; };
+		F12B078195B469600F2DD150 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E19AADF8ADE70C2667CECFC /* Workout.swift */; };
+		F53ED553B7ECC20DACADCB0B /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7DF593908002021C50EECD /* AchievementsView.swift */; };
+		F7D000C0A9A61D2D106D4515 /* Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED2D5FFE494B543573B7067 /* Streak.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2F4A16BD64E2D541D433FD95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A10864DE3A085480EE6887D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52248B3BC09A3E6280F8F30C;
+			remoteInfo = StepSyncWatchWidgets;
+		};
+		80096C0661AE008A80494B2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A10864DE3A085480EE6887D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E2EEB87F741DF98806607AAD;
+			remoteInfo = StepSyncWidgets;
+		};
+		84702CFB649F84CC7FBB3356 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A10864DE3A085480EE6887D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 21280079F968AF8D70EBCEAA;
+			remoteInfo = StepSyncIntents;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A7A31BF2C461E2DD73D94147 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				752552D92D3AA63080F72BDB /* StepSyncWatchWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA088739699CEEB70AFDF50C /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3DCDB445C1028357F02C7C38 /* StepSyncWidgets.appex in Embed Foundation Extensions */,
+				E78418504B377D0F9DD5851A /* StepSyncIntents.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		045EF03085E2D6BA4B559EA9 /* ActiveWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveWorkoutView.swift; sourceTree = "<group>"; };
+		0594EE5F89F2E73C9A9085C4 /* TrendAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendAnalyzer.swift; sourceTree = "<group>"; };
+		08752E8147AD2A1301F31161 /* StepSyncWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncWidgets.swift; sourceTree = "<group>"; };
+		0DF843716BF4587BE79BDA6F /* WatchSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSummaryView.swift; sourceTree = "<group>"; };
+		11F5DF6110D39647B7C36C6B /* StepSyncWidgets.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = StepSyncWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1722FF4C41DB91EE38241BA1 /* StepHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepHistoryView.swift; sourceTree = "<group>"; };
+		18FA06FB36ADE1392E8D0ED1 /* WorkoutMirroringManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutMirroringManager.swift; sourceTree = "<group>"; };
+		251834999B5DE6FF62E41CDC /* StepCountComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountComplication.swift; sourceTree = "<group>"; };
+		2BDFF4AD4786D068DEF6A442 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		2E0358AED9B5893BDE0AF898 /* StepGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepGoal.swift; sourceTree = "<group>"; };
+		30408CAD212F0516D67275C0 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		32301399A96F7071922FB9FD /* HeartRateSample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateSample.swift; sourceTree = "<group>"; };
+		333190F2AAF9BA0216319E04 /* ProgressRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRing.swift; sourceTree = "<group>"; };
+		36DE2B023C269886C0C72B02 /* StepCountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepCountService.swift; sourceTree = "<group>"; };
+		3FD052C0E44FA640CB8247C7 /* NewWorkoutSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutSheet.swift; sourceTree = "<group>"; };
+		414E84BB340D6DAF0287C8AA /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		4617766756B3D1838B005EF6 /* DailyStepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStepRecord.swift; sourceTree = "<group>"; };
+		507C6AC8C714D3004389B8C2 /* StepSyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncApp.swift; sourceTree = "<group>"; };
+		548AD23161466182141BC9A7 /* WorkoutSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSessionManager.swift; sourceTree = "<group>"; };
+		56BEDFEBA6DD47063E808711 /* StepSync.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = StepSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		619EB00206311DE7D8DBD4A2 /* StepSyncWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncWatchApp.swift; sourceTree = "<group>"; };
+		64F48F4938DC62F2A41DDCBA /* StepSyncWatchWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncWatchWidgets.swift; sourceTree = "<group>"; };
+		69EE6E1BC1242D763230E423 /* QuickStartWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickStartWidget.swift; sourceTree = "<group>"; };
+		6A159FACE8486A808DC22982 /* InsightsCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsCalculator.swift; sourceTree = "<group>"; };
+		70DBC5600BC8DB848DC91356 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		72BF69FC65C1525C3C8307DD /* WatchDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDashboardView.swift; sourceTree = "<group>"; };
+		82518F66F267A5A23803BE51 /* WorkoutDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailView.swift; sourceTree = "<group>"; };
+		8466F800DC5F4FA3F9B3D814 /* WorkoutRoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRoutePoint.swift; sourceTree = "<group>"; };
+		84D7D9551DF692D50A88ADA1 /* WorkoutComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutComplication.swift; sourceTree = "<group>"; };
+		8672D93AEF6BB62A817B56A2 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		8C2E7BFC21DC3DDC2210F50E /* StepSyncIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepSyncIntents.swift; sourceTree = "<group>"; };
+		8CA7ED7B84E9BAF769CB5094 /* WatchWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutView.swift; sourceTree = "<group>"; };
+		8D70F69AD9C2EC4E28DAD69D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		8E19AADF8ADE70C2667CECFC /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		9E567C706AD65EBC52BFA6D2 /* GoalSettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalSettingsSheet.swift; sourceTree = "<group>"; };
+		9E7DF593908002021C50EECD /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
+		ABFD9AD9FBD35592B303F360 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AE1FF53BCA9EC3D6312ADAEE /* StepSyncWatchWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StepSyncWatchWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B18A93CE6EB05FAF1E990446 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		B1A0B543463ACC93F8A1659F /* StepSyncWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StepSyncWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B42EE5022974865C949AE556 /* WatchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchContentView.swift; sourceTree = "<group>"; };
+		B5CC8F94A6C002C09788009D /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
+		BB6488A2B67D2294BEB584BE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		BBF90135A3B521C527A2A825 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CDDE60EB517755163A49BB5F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		DCC157AAB68C57ED80A10A36 /* StepProgressWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepProgressWidget.swift; sourceTree = "<group>"; };
+		DED2D5FFE494B543573B7067 /* Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streak.swift; sourceTree = "<group>"; };
+		F01DD81CB53571454D1CBBB4 /* StepSyncIntents.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = StepSyncIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F33D159B174208D9A99DB182 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F9BDB8B160F2FFD64CA8690F /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		06A3BFF5B108621F37E3B3D0 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				8D70F69AD9C2EC4E28DAD69D /* LocationManager.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		0C50579A128909E83E5AB1E1 /* HealthKit */ = {
+			isa = PBXGroup;
+			children = (
+				2BDFF4AD4786D068DEF6A442 /* HealthKitManager.swift */,
+				36DE2B023C269886C0C72B02 /* StepCountService.swift */,
+				18FA06FB36ADE1392E8D0ED1 /* WorkoutMirroringManager.swift */,
+				548AD23161466182141BC9A7 /* WorkoutSessionManager.swift */,
+			);
+			path = HealthKit;
+			sourceTree = "<group>";
+		};
+		0D3091B8F3D5EF3A593F3784 /* StepSyncWatch */ = {
+			isa = PBXGroup;
+			children = (
+				7558C0689C49B3D45DE88B3F /* App */,
+				6E3A868EBB36DA84A05E94C1 /* Features */,
+				C8A1EAB674D8316E93E46480 /* Resources */,
+			);
+			path = StepSyncWatch;
+			sourceTree = "<group>";
+		};
+		1CE32A08F27CE1EBFFC41620 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		23557B23C9E9031D879506B4 /* CloudKit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CloudKit;
+			sourceTree = "<group>";
+		};
+		27FC05AC2165E52228F7E3FB /* StepSyncWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				08752E8147AD2A1301F31161 /* StepSyncWidgets.swift */,
+				85151AB4F837E0773E03341E /* QuickStartWidget */,
+				AE6F17D8A152C0AD8090A0C4 /* StepProgressWidget */,
+			);
+			path = StepSyncWidgets;
+			sourceTree = "<group>";
+		};
+		3210C4A3DCC0B31C8B6775CE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				414E84BB340D6DAF0287C8AA /* Date+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		424FBC318C41374155358652 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				30408CAD212F0516D67275C0 /* DashboardView.swift */,
+				F9BDB8B160F2FFD64CA8690F /* DashboardViewModel.swift */,
+				9E567C706AD65EBC52BFA6D2 /* GoalSettingsSheet.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		4F03F2C6BADD6FF75F409664 = {
+			isa = PBXGroup;
+			children = (
+				ACA9EF8BCCE83C50E8170338 /* StepSync */,
+				DF0FE14E378820ED1C0D122A /* StepSyncIntents */,
+				D878592C4FDD961902E5C72C /* StepSyncShared */,
+				0D3091B8F3D5EF3A593F3784 /* StepSyncWatch */,
+				A7A0740FAD3524B3DA5280FC /* StepSyncWatchWidgets */,
+				27FC05AC2165E52228F7E3FB /* StepSyncWidgets */,
+				875BBF760C0A3778D23E7C1D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5BAE3AA607549F403BD77CCC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				70DBC5600BC8DB848DC91356 /* Achievement.swift */,
+				4617766756B3D1838B005EF6 /* DailyStepRecord.swift */,
+				32301399A96F7071922FB9FD /* HeartRateSample.swift */,
+				2E0358AED9B5893BDE0AF898 /* StepGoal.swift */,
+				DED2D5FFE494B543573B7067 /* Streak.swift */,
+				8672D93AEF6BB62A817B56A2 /* UserSettings.swift */,
+				8E19AADF8ADE70C2667CECFC /* Workout.swift */,
+				8466F800DC5F4FA3F9B3D814 /* WorkoutRoutePoint.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6E3A868EBB36DA84A05E94C1 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				FBF4215A38AE08827AE7262E /* Dashboard */,
+				8732919F97FEDBDAB64EA59E /* Summary */,
+				8094E78AD83574A6ABABFBBD /* Workouts */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		7558C0689C49B3D45DE88B3F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				619EB00206311DE7D8DBD4A2 /* StepSyncWatchApp.swift */,
+				B42EE5022974865C949AE556 /* WatchContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		8094E78AD83574A6ABABFBBD /* Workouts */ = {
+			isa = PBXGroup;
+			children = (
+				8CA7ED7B84E9BAF769CB5094 /* WatchWorkoutView.swift */,
+			);
+			path = Workouts;
+			sourceTree = "<group>";
+		};
+		85151AB4F837E0773E03341E /* QuickStartWidget */ = {
+			isa = PBXGroup;
+			children = (
+				69EE6E1BC1242D763230E423 /* QuickStartWidget.swift */,
+			);
+			path = QuickStartWidget;
+			sourceTree = "<group>";
+		};
+		8732919F97FEDBDAB64EA59E /* Summary */ = {
+			isa = PBXGroup;
+			children = (
+				0DF843716BF4587BE79BDA6F /* WatchSummaryView.swift */,
+			);
+			path = Summary;
+			sourceTree = "<group>";
+		};
+		875BBF760C0A3778D23E7C1D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56BEDFEBA6DD47063E808711 /* StepSync.app */,
+				F01DD81CB53571454D1CBBB4 /* StepSyncIntents.appex */,
+				B1A0B543463ACC93F8A1659F /* StepSyncWatch.app */,
+				AE1FF53BCA9EC3D6312ADAEE /* StepSyncWatchWidgets.appex */,
+				11F5DF6110D39647B7C36C6B /* StepSyncWidgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8B330A8C7D9C22AC54CDB891 /* Workouts */ = {
+			isa = PBXGroup;
+			children = (
+				045EF03085E2D6BA4B559EA9 /* ActiveWorkoutView.swift */,
+				3FD052C0E44FA640CB8247C7 /* NewWorkoutSheet.swift */,
+				82518F66F267A5A23803BE51 /* WorkoutDetailView.swift */,
+				B5CC8F94A6C002C09788009D /* WorkoutListView.swift */,
+			);
+			path = Workouts;
+			sourceTree = "<group>";
+		};
+		93BE73D94DF690D177EA322A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				CDDE60EB517755163A49BB5F /* NotificationService.swift */,
+				23557B23C9E9031D879506B4 /* CloudKit */,
+				0C50579A128909E83E5AB1E1 /* HealthKit */,
+				06A3BFF5B108621F37E3B3D0 /* Location */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		9480C507FA259A3DB9102BC6 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				E86E78700A37D7954C0D4B40 /* Achievements */,
+				424FBC318C41374155358652 /* Dashboard */,
+				F25ECA9FF37B943FBA90F82F /* Insights */,
+				B75D31857F2D4F804045D941 /* Settings */,
+				D936003851F0795DAA5165CE /* Steps */,
+				8B330A8C7D9C22AC54CDB891 /* Workouts */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		98EC92E954D844FFB1E4A750 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				9AB17EEEBAC7E164D171DE7D /* Components */,
+				1CE32A08F27CE1EBFFC41620 /* Extensions */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		9AB17EEEBAC7E164D171DE7D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				333190F2AAF9BA0216319E04 /* ProgressRing.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		A7A0740FAD3524B3DA5280FC /* StepSyncWatchWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				64F48F4938DC62F2A41DDCBA /* StepSyncWatchWidgets.swift */,
+				A842F3F475E3A6187DA5F66B /* StepCountComplication */,
+				F159198D8948F9F6FC2FFBC7 /* WorkoutComplication */,
+			);
+			path = StepSyncWatchWidgets;
+			sourceTree = "<group>";
+		};
+		A842F3F475E3A6187DA5F66B /* StepCountComplication */ = {
+			isa = PBXGroup;
+			children = (
+				251834999B5DE6FF62E41CDC /* StepCountComplication.swift */,
+			);
+			path = StepCountComplication;
+			sourceTree = "<group>";
+		};
+		ACA9EF8BCCE83C50E8170338 /* StepSync */ = {
+			isa = PBXGroup;
+			children = (
+				FAA0D637820B230034EAD08B /* App */,
+				9480C507FA259A3DB9102BC6 /* Features */,
+				AF9E5B4FC9DEB45428883752 /* Resources */,
+				98EC92E954D844FFB1E4A750 /* Shared */,
+			);
+			path = StepSync;
+			sourceTree = "<group>";
+		};
+		AE6F17D8A152C0AD8090A0C4 /* StepProgressWidget */ = {
+			isa = PBXGroup;
+			children = (
+				DCC157AAB68C57ED80A10A36 /* StepProgressWidget.swift */,
+			);
+			path = StepProgressWidget;
+			sourceTree = "<group>";
+		};
+		AF9E5B4FC9DEB45428883752 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABFD9AD9FBD35592B303F360 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B6414D4D958A1F05DDB05C5F /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				6A159FACE8486A808DC22982 /* InsightsCalculator.swift */,
+				0594EE5F89F2E73C9A9085C4 /* TrendAnalyzer.swift */,
+			);
+			path = Analytics;
+			sourceTree = "<group>";
+		};
+		B75D31857F2D4F804045D941 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				BB6488A2B67D2294BEB584BE /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		C8A1EAB674D8316E93E46480 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F33D159B174208D9A99DB182 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D878592C4FDD961902E5C72C /* StepSyncShared */ = {
+			isa = PBXGroup;
+			children = (
+				B6414D4D958A1F05DDB05C5F /* Analytics */,
+				3210C4A3DCC0B31C8B6775CE /* Extensions */,
+				5BAE3AA607549F403BD77CCC /* Models */,
+				93BE73D94DF690D177EA322A /* Services */,
+			);
+			path = StepSyncShared;
+			sourceTree = "<group>";
+		};
+		D936003851F0795DAA5165CE /* Steps */ = {
+			isa = PBXGroup;
+			children = (
+				1722FF4C41DB91EE38241BA1 /* StepHistoryView.swift */,
+			);
+			path = Steps;
+			sourceTree = "<group>";
+		};
+		DF0FE14E378820ED1C0D122A /* StepSyncIntents */ = {
+			isa = PBXGroup;
+			children = (
+				8C2E7BFC21DC3DDC2210F50E /* StepSyncIntents.swift */,
+			);
+			path = StepSyncIntents;
+			sourceTree = "<group>";
+		};
+		E86E78700A37D7954C0D4B40 /* Achievements */ = {
+			isa = PBXGroup;
+			children = (
+				9E7DF593908002021C50EECD /* AchievementsView.swift */,
+			);
+			path = Achievements;
+			sourceTree = "<group>";
+		};
+		F159198D8948F9F6FC2FFBC7 /* WorkoutComplication */ = {
+			isa = PBXGroup;
+			children = (
+				84D7D9551DF692D50A88ADA1 /* WorkoutComplication.swift */,
+			);
+			path = WorkoutComplication;
+			sourceTree = "<group>";
+		};
+		F25ECA9FF37B943FBA90F82F /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				B18A93CE6EB05FAF1E990446 /* InsightsView.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		FAA0D637820B230034EAD08B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BBF90135A3B521C527A2A825 /* ContentView.swift */,
+				507C6AC8C714D3004389B8C2 /* StepSyncApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		FBF4215A38AE08827AE7262E /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				72BF69FC65C1525C3C8307DD /* WatchDashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		21280079F968AF8D70EBCEAA /* StepSyncIntents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6600FAFACC7724BB5663D11 /* Build configuration list for PBXNativeTarget "StepSyncIntents" */;
+			buildPhases = (
+				365E7B457FADD4831F48C8F7 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StepSyncIntents;
+			packageProductDependencies = (
+			);
+			productName = StepSyncIntents;
+			productReference = F01DD81CB53571454D1CBBB4 /* StepSyncIntents.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		23238C2789BA9F33BBFBF453 /* StepSync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 11E712156110ACD763340656 /* Build configuration list for PBXNativeTarget "StepSync" */;
+			buildPhases = (
+				8AAD34346D80B83F7D1BDDEE /* Sources */,
+				DE1F647B958D29DDBAFD7ACD /* Resources */,
+				AA088739699CEEB70AFDF50C /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F533336D94697E897E99782 /* PBXTargetDependency */,
+				2CEE1F40AFC26D8687F66E0D /* PBXTargetDependency */,
+			);
+			name = StepSync;
+			packageProductDependencies = (
+			);
+			productName = StepSync;
+			productReference = 56BEDFEBA6DD47063E808711 /* StepSync.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52248B3BC09A3E6280F8F30C /* StepSyncWatchWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41492FEAADA7BA971BF731F3 /* Build configuration list for PBXNativeTarget "StepSyncWatchWidgets" */;
+			buildPhases = (
+				84EBB02B0C69995446C68D3F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StepSyncWatchWidgets;
+			packageProductDependencies = (
+			);
+			productName = StepSyncWatchWidgets;
+			productReference = AE1FF53BCA9EC3D6312ADAEE /* StepSyncWatchWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		791A47EACC1769E647E75D30 /* StepSyncWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9301532A395AA5EACE2CA4A2 /* Build configuration list for PBXNativeTarget "StepSyncWatch" */;
+			buildPhases = (
+				FBB8BC5E3B4882818175E84F /* Sources */,
+				CA1F9E9F333C7FD1B6CFE98B /* Resources */,
+				A7A31BF2C461E2DD73D94147 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C585A07C2C6D756C7F7DC7DB /* PBXTargetDependency */,
+			);
+			name = StepSyncWatch;
+			packageProductDependencies = (
+			);
+			productName = StepSyncWatch;
+			productReference = B1A0B543463ACC93F8A1659F /* StepSyncWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E2EEB87F741DF98806607AAD /* StepSyncWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 033648C4BB9CA0E3EA8E5C9A /* Build configuration list for PBXNativeTarget "StepSyncWidgets" */;
+			buildPhases = (
+				2A543873B78045F8E8640513 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StepSyncWidgets;
+			packageProductDependencies = (
+			);
+			productName = StepSyncWidgets;
+			productReference = 11F5DF6110D39647B7C36C6B /* StepSyncWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A10864DE3A085480EE6887D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					21280079F968AF8D70EBCEAA = {
+						DevelopmentTeam = 6LC7EQ5F2W;
+						ProvisioningStyle = Automatic;
+					};
+					23238C2789BA9F33BBFBF453 = {
+						DevelopmentTeam = 6LC7EQ5F2W;
+						ProvisioningStyle = Automatic;
+					};
+					52248B3BC09A3E6280F8F30C = {
+						DevelopmentTeam = 6LC7EQ5F2W;
+						ProvisioningStyle = Automatic;
+					};
+					791A47EACC1769E647E75D30 = {
+						DevelopmentTeam = 6LC7EQ5F2W;
+						ProvisioningStyle = Automatic;
+					};
+					E2EEB87F741DF98806607AAD = {
+						DevelopmentTeam = 6LC7EQ5F2W;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9DB1A5EB9C21F9E08F86E9B1 /* Build configuration list for PBXProject "StepSync" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4F03F2C6BADD6FF75F409664;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				23238C2789BA9F33BBFBF453 /* StepSync */,
+				21280079F968AF8D70EBCEAA /* StepSyncIntents */,
+				791A47EACC1769E647E75D30 /* StepSyncWatch */,
+				52248B3BC09A3E6280F8F30C /* StepSyncWatchWidgets */,
+				E2EEB87F741DF98806607AAD /* StepSyncWidgets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CA1F9E9F333C7FD1B6CFE98B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B333B589CF488D9D19316862 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DE1F647B958D29DDBAFD7ACD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15934FED6C856546DC79DE75 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A543873B78045F8E8640513 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4FEDE9F71D3ABCCB62CA579F /* Achievement.swift in Sources */,
+				4C3049779EFE5BB11DF9D9AB /* DailyStepRecord.swift in Sources */,
+				D1C2FE7756350DC072287A6D /* HeartRateSample.swift in Sources */,
+				C10E8B27D06048E1B5E2C6C1 /* QuickStartWidget.swift in Sources */,
+				67E59D19FDC968D0A9190B59 /* StepGoal.swift in Sources */,
+				8593249371F89A8CC98C679D /* StepProgressWidget.swift in Sources */,
+				988E3D29B5F52752941F5BE5 /* StepSyncWidgets.swift in Sources */,
+				4C59FD25079323B0884E0645 /* Streak.swift in Sources */,
+				31AEEFCCADD1DD901E995E8B /* UserSettings.swift in Sources */,
+				166CF17546C706242D367D17 /* Workout.swift in Sources */,
+				40BA7E6F04DC3BB5918D8530 /* WorkoutRoutePoint.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		365E7B457FADD4831F48C8F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1953FC9E2ACD05CF4A5C65DF /* StepSyncIntents.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84EBB02B0C69995446C68D3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1078761F90D9E31DD5A5DF54 /* Achievement.swift in Sources */,
+				B4601F99E0F67BDE1FDB164D /* DailyStepRecord.swift in Sources */,
+				BF7F4F2B855F5D0F3B6B44A1 /* HeartRateSample.swift in Sources */,
+				3664A1D8ABA0DCC8D590E894 /* StepCountComplication.swift in Sources */,
+				58DAF42072F7F31E510F5EDF /* StepGoal.swift in Sources */,
+				2CA358120DB1981A17FCC256 /* StepSyncWatchWidgets.swift in Sources */,
+				6905F07069B0BA1E1725C06E /* Streak.swift in Sources */,
+				83CA375B50C1009DC24F32CE /* UserSettings.swift in Sources */,
+				E46E1647FA941BEB75FB6C36 /* Workout.swift in Sources */,
+				4F064DD86EFE427B8FE2C887 /* WorkoutComplication.swift in Sources */,
+				1D1B073A83B61226FA80B02F /* WorkoutRoutePoint.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AAD34346D80B83F7D1BDDEE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75CCF2A5D819F13A04F9C08B /* Achievement.swift in Sources */,
+				F53ED553B7ECC20DACADCB0B /* AchievementsView.swift in Sources */,
+				BD0C2239975E53569B9A704D /* ActiveWorkoutView.swift in Sources */,
+				0CA6BD00045CD934757DEA33 /* ContentView.swift in Sources */,
+				C2C8075627D5E2DFF0605DD9 /* DailyStepRecord.swift in Sources */,
+				7079A71DD8F7A433D1D8E1BA /* DashboardView.swift in Sources */,
+				9516FD112E8657C67BEE227E /* DashboardViewModel.swift in Sources */,
+				DA608853D0B5CB62A3D9CCB8 /* Date+Extensions.swift in Sources */,
+				73CF94C6A8706A448D23B080 /* GoalSettingsSheet.swift in Sources */,
+				693CBE4631376EDD7AD2DF1C /* HealthKitManager.swift in Sources */,
+				B47235939085339F8A623974 /* HeartRateSample.swift in Sources */,
+				D0C3788C1BADA7DB626FD413 /* InsightsCalculator.swift in Sources */,
+				1A3B547353FD79EBE8BF6240 /* InsightsView.swift in Sources */,
+				8BB393084CBC0809A617F265 /* LocationManager.swift in Sources */,
+				B5DE244F45416263B0C0AC8F /* NewWorkoutSheet.swift in Sources */,
+				7B7475C1A2936373F1020202 /* NotificationService.swift in Sources */,
+				97959A60DDD1A992E7635076 /* ProgressRing.swift in Sources */,
+				0ED46C89359AFA7F26A9C8C7 /* SettingsView.swift in Sources */,
+				233B3E958796B2A6FEBF89C3 /* StepCountService.swift in Sources */,
+				40B99AAC9E84FB39123F8F16 /* StepGoal.swift in Sources */,
+				6BF6B6E89DFB88551A489BBD /* StepHistoryView.swift in Sources */,
+				E4147B78BDC0C76D3155AE40 /* StepSyncApp.swift in Sources */,
+				56620E6962C507AA61B134C4 /* Streak.swift in Sources */,
+				DB3D34F9ACDB0B500AABD473 /* TrendAnalyzer.swift in Sources */,
+				85F10467020CACBA3DC70926 /* UserSettings.swift in Sources */,
+				C933FD75818D25E0EE37482C /* Workout.swift in Sources */,
+				CAAE27AB32E796D76A9D1B93 /* WorkoutDetailView.swift in Sources */,
+				B1611E15F24666DD5BD9A33E /* WorkoutListView.swift in Sources */,
+				22915DDAC7B7C1814DE05D39 /* WorkoutMirroringManager.swift in Sources */,
+				087E5A6F33469383F6328479 /* WorkoutRoutePoint.swift in Sources */,
+				9FEB06647A3D498F14ED137D /* WorkoutSessionManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBB8BC5E3B4882818175E84F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A395367029EE0083A931C9B5 /* Achievement.swift in Sources */,
+				505BC8E1304D35F2B2105FF2 /* DailyStepRecord.swift in Sources */,
+				E7C0A3986E7937318D7894BC /* Date+Extensions.swift in Sources */,
+				5F3CCA35ADA1D6C5F64EBE21 /* HealthKitManager.swift in Sources */,
+				2A72240B360DF520BC7A2416 /* HeartRateSample.swift in Sources */,
+				DDB452AF06061C1B6A634161 /* InsightsCalculator.swift in Sources */,
+				0851ED51EE0653908E201FA1 /* LocationManager.swift in Sources */,
+				998F91509EE279268A9BFC3F /* NotificationService.swift in Sources */,
+				18392A5276A787ABA74F5251 /* StepCountService.swift in Sources */,
+				40E6455C1AD70B8E3714E3BE /* StepGoal.swift in Sources */,
+				1DEF5897BADD1DAB17E65027 /* StepSyncWatchApp.swift in Sources */,
+				F7D000C0A9A61D2D106D4515 /* Streak.swift in Sources */,
+				46872C0C6774CDE1B44A7230 /* TrendAnalyzer.swift in Sources */,
+				87868BD67775BB1BC05BFD96 /* UserSettings.swift in Sources */,
+				04F5DD65BC5CAB8BF05C1729 /* WatchContentView.swift in Sources */,
+				527DB067461BE4C9ACB72BC9 /* WatchDashboardView.swift in Sources */,
+				B6D6FA2F6CE16B476848186E /* WatchSummaryView.swift in Sources */,
+				70CBB78301B05480D653CECC /* WatchWorkoutView.swift in Sources */,
+				F12B078195B469600F2DD150 /* Workout.swift in Sources */,
+				16D6EFB40545ED72353FD8AA /* WorkoutMirroringManager.swift in Sources */,
+				17C1B7ED3CAAB7C5A0BAFCB5 /* WorkoutRoutePoint.swift in Sources */,
+				70AE5081C1A947E2F89456B7 /* WorkoutSessionManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2CEE1F40AFC26D8687F66E0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 21280079F968AF8D70EBCEAA /* StepSyncIntents */;
+			targetProxy = 84702CFB649F84CC7FBB3356 /* PBXContainerItemProxy */;
+		};
+		4F533336D94697E897E99782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E2EEB87F741DF98806607AAD /* StepSyncWidgets */;
+			targetProxy = 80096C0661AE008A80494B2D /* PBXContainerItemProxy */;
+		};
+		C585A07C2C6D756C7F7DC7DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52248B3BC09A3E6280F8F30C /* StepSyncWatchWidgets */;
+			targetProxy = 2F4A16BD64E2D541D433FD95 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		04746A841EF6AC946021F21E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StepSyncIntents/StepSyncIntents.entitlements;
+				INFOPLIST_FILE = StepSyncIntents/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.intents;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1488F312CC9811D7BEC21955 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StepSyncWatch/Resources/StepSyncWatch.entitlements;
+				INFOPLIST_FILE = StepSyncWatch/Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		28089E667853548942237C9F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StepSync/Resources/StepSync.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = StepSync/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2B3FBC8A6D8C40A52086724A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6LC7EQ5F2W;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		3CB166D5B2D929D46E637BDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StepSyncWidgets/StepSyncWidgets.entitlements;
+				INFOPLIST_FILE = StepSyncWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.widgets;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		598D6B1DBB621F5E5F3D0840 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StepSyncIntents/StepSyncIntents.entitlements;
+				INFOPLIST_FILE = StepSyncIntents/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.intents;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		64F30434EE43D978BA830CAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StepSyncWatch/Resources/StepSyncWatch.entitlements;
+				INFOPLIST_FILE = StepSyncWatch/Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.watchkitapp;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		730D0B089AA191C33E37F508 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6LC7EQ5F2W;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+		84D0D8CAD2CB87C2FE3D9A6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StepSyncWidgets/StepSyncWidgets.entitlements;
+				INFOPLIST_FILE = StepSyncWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.widgets;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E378093489DA6DD952DE866C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StepSyncWatchWidgets/StepSyncWatchWidgets.entitlements;
+				INFOPLIST_FILE = StepSyncWatchWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.watchkitapp.widgets;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		EF9CCCF50D366FC65657EEA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = StepSyncWatchWidgets/StepSyncWatchWidgets.entitlements;
+				INFOPLIST_FILE = StepSyncWatchWidgets/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync.watchkitapp.widgets;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		F86BDBCEB0EE4974D7DDBB65 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StepSync/Resources/StepSync.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = StepSync/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nwwsolutions.stepsync;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		033648C4BB9CA0E3EA8E5C9A /* Build configuration list for PBXNativeTarget "StepSyncWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CB166D5B2D929D46E637BDF /* Debug */,
+				84D0D8CAD2CB87C2FE3D9A6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		11E712156110ACD763340656 /* Build configuration list for PBXNativeTarget "StepSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F86BDBCEB0EE4974D7DDBB65 /* Debug */,
+				28089E667853548942237C9F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		41492FEAADA7BA971BF731F3 /* Build configuration list for PBXNativeTarget "StepSyncWatchWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF9CCCF50D366FC65657EEA9 /* Debug */,
+				E378093489DA6DD952DE866C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9301532A395AA5EACE2CA4A2 /* Build configuration list for PBXNativeTarget "StepSyncWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1488F312CC9811D7BEC21955 /* Debug */,
+				64F30434EE43D978BA830CAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9DB1A5EB9C21F9E08F86E9B1 /* Build configuration list for PBXProject "StepSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B3FBC8A6D8C40A52086724A /* Debug */,
+				730D0B089AA191C33E37F508 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D6600FAFACC7724BB5663D11 /* Build configuration list for PBXNativeTarget "StepSyncIntents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04746A841EF6AC946021F21E /* Debug */,
+				598D6B1DBB621F5E5F3D0840 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A10864DE3A085480EE6887D /* Project object */;
+}
