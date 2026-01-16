@@ -170,6 +170,15 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
             session?.startActivity(with: startDate)
             try await builder?.beginCollection(at: startDate)
 
+            // Enable mirroring to iPhone companion app
+            session?.startMirroringToCompanionDevice { success, error in
+                if let error = error {
+                    print("WorkoutSessionManager: Failed to start mirroring: \(error)")
+                } else if success {
+                    print("WorkoutSessionManager: Started mirroring to companion device")
+                }
+            }
+
             isSessionActive = true
             currentWorkoutType = type
             currentWorkoutEnvironment = environment

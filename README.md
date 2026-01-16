@@ -78,6 +78,33 @@ The app uses MVVM with a repository pattern:
 - WidgetKit for widgets and complications
 - WatchConnectivity for real-time iPhone/Watch communication
 
+## Development Workflow
+
+New features follow this process:
+
+1. **Feature Branch**: Create a branch from `master` (e.g., `feature/my-feature`)
+2. **Implementation**: Complete all code changes
+3. **Unit Tests**: Write tests to verify functionality
+4. **Build Verification**: Ensure iOS and watchOS targets compile
+5. **Pull Request**: Create PR with summary and test plan
+6. **Review**: Manual app review before merging
+
+### Build Commands
+
+```bash
+# Build iOS app
+xcodebuild -scheme StepSync -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
+
+# Build watchOS app
+xcodebuild -scheme StepSyncWatch -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm)' build
+
+# Run tests
+xcodebuild test -scheme StepSync -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
+
+# Build all targets
+xcodebuild -scheme "StepSync (All)" build
+```
+
 ## Privacy
 
 StepSync requires access to:
