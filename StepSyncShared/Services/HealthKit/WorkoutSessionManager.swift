@@ -277,6 +277,34 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         lastPauseDate = nil
     }
 
+    /// Resets metrics and cleans up session state on main thread for proper UI updates
+    @MainActor
+    private func cleanupAndResetOnMain() {
+        #if os(watchOS)
+        session = nil
+        builder = nil
+        stopMetricsSendTimer()
+        isMirroredSession = false
+        isMirroringToCompanion = false
+        #endif
+        isSessionActive = false
+        isPaused = false
+        currentWorkoutType = nil
+        currentWorkoutEnvironment = nil
+        sessionStartDate = nil
+        pausedTime = 0
+        lastPauseDate = nil
+        resetMetrics()
+    }
+
+    /// Public method to reset the workout session state after a workout ends.
+    /// Call this from the UI after the workout has been saved to ensure the UI updates properly.
+    @MainActor
+    public func resetAfterWorkout() {
+        stopUpdateTimer()
+        cleanupAndResetOnMain()
+    }
+
     private func startUpdateTimer() {
         DispatchQueue.main.async { [weak self] in
             self?.updateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in

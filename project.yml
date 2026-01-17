@@ -90,6 +90,7 @@ targets:
       - path: StepSyncShared/Models
         excludes:
           - "**/*.plist"
+      - path: StepSyncShared/Services/LiveActivityManager.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.nwwsolutions.stepsync.widgets

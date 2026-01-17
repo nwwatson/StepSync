@@ -1,18 +1,30 @@
 import Foundation
 import HealthKit
 import Observation
+import WatchConnectivity
+#if os(iOS)
+import ActivityKit
+#endif
 
 /// Manages workout mirroring between iPhone and Apple Watch.
-/// When a workout is started on iPhone, it can be mirrored to the Watch
-/// which then runs the actual workout session with sensor access.
+/// When a workout is started on iPhone, it sends a command to the Watch
+/// which then runs the actual workout session with sensor access and mirrors back.
 @Observable
 public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     public static let shared = WorkoutMirroringManager()
 
     private let healthStore = HKHealthStore()
+    private let appGroupID = "group.com.nwwsolutions.steppingszn"
+    private let connectivityManager = WatchConnectivityManager.shared
 
     #if os(iOS)
     private var mirroredSession: HKWorkoutSession?
+
+    /// Live Activity manager for displaying workout on lock screen
+    @available(iOS 16.1, *)
+    private var liveActivityManager: LiveActivityManager {
+        LiveActivityManager.shared
+    }
     #endif
 
     public private(set) var isMirroring = false
@@ -20,6 +32,15 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     public private(set) var currentWorkoutType: WorkoutType?
     public private(set) var currentWorkoutEnvironment: WorkoutEnvironment?
     public private(set) var isWatchInitiatedWorkout = false
+
+    /// Indicates if the Watch is reachable for starting workouts
+    public var isWatchReachable: Bool {
+        #if os(iOS)
+        return connectivityManager.isReachable
+        #else
+        return false
+        #endif
+    }
 
     // Metrics received from watch
     public private(set) var elapsedTime: TimeInterval = 0
@@ -77,6 +98,9 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
         resetMetrics()
         startMetricsTimer()
 
+        // Start Live Activity
+        startLiveActivity()
+
         print("WorkoutMirroringManager: Started receiving watch-initiated workout session")
     }
     #endif
@@ -84,9 +108,105 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     #if os(iOS)
     private var builder: HKLiveWorkoutBuilder?
 
-    /// Starts a workout session on the iPhone.
-    /// In iOS 26+, workouts run natively on iPhone without needing Apple Watch.
+    /// Starts the Live Activity for the workout
+    private func startLiveActivity() {
+        guard #available(iOS 16.1, *) else { return }
+
+        let userDefaults = UserDefaults(suiteName: appGroupID)
+        let dailyGoal = userDefaults?.integer(forKey: "dailyGoal") ?? 10000
+        let todaySteps = userDefaults?.integer(forKey: "todayStepCount") ?? 0
+
+        let workoutTypeName = currentWorkoutType?.displayName ?? "Workout"
+        let workoutIcon = currentWorkoutType?.systemImage ?? "figure.walk"
+
+        liveActivityManager.startWorkoutActivity(
+            workoutType: workoutTypeName,
+            workoutIcon: workoutIcon,
+            dailyGoal: dailyGoal,
+            initialSteps: 0,
+            initialDailySteps: todaySteps
+        )
+    }
+
+    /// Updates the Live Activity with current metrics
+    private func updateLiveActivity() {
+        guard #available(iOS 16.1, *) else { return }
+
+        let userDefaults = UserDefaults(suiteName: appGroupID)
+        let todaySteps = userDefaults?.integer(forKey: "todayStepCount") ?? 0
+
+        // Total daily steps = steps before workout + workout steps
+        let totalDailySteps = todaySteps + stepCount
+
+        liveActivityManager.updateWorkoutActivity(
+            stepCount: stepCount,
+            totalDailySteps: totalDailySteps,
+            heartRate: Int(heartRate),
+            distanceMeters: distance,
+            elapsedSeconds: Int(elapsedTime),
+            isPaused: isPaused
+        )
+    }
+
+    /// Ends the Live Activity
+    private func endLiveActivity() {
+        guard #available(iOS 16.1, *) else { return }
+
+        let userDefaults = UserDefaults(suiteName: appGroupID)
+        let todaySteps = userDefaults?.integer(forKey: "todayStepCount") ?? 0
+        let totalDailySteps = todaySteps + stepCount
+
+        liveActivityManager.endWorkoutActivity(
+            finalStepCount: stepCount,
+            finalTotalDailySteps: totalDailySteps,
+            finalHeartRate: Int(heartRate),
+            finalDistanceMeters: distance,
+            finalElapsedSeconds: Int(elapsedTime)
+        )
+    }
+
+    /// Starts a workout on Apple Watch by sending a command via WatchConnectivity.
+    /// The Watch will start the workout and mirror it back to iPhone.
     public func startMirroredWorkout(type: WorkoutType, environment: WorkoutEnvironment) async throws {
+        guard !isMirroring else {
+            throw WorkoutMirroringError.sessionAlreadyActive
+        }
+
+        // Try to start workout on Watch via WatchConnectivity
+        print("WorkoutMirroringManager: Attempting to start workout on Apple Watch...")
+        print("WorkoutMirroringManager: Watch reachable: \(connectivityManager.isReachable)")
+
+        guard connectivityManager.canSendMessage else {
+            throw WorkoutMirroringError.watchNotReachable
+        }
+
+        do {
+            // Send command to Watch to start the workout
+            try await connectivityManager.sendStartWorkoutCommand(type: type, environment: environment)
+
+            // Store the workout type/environment for when we receive the mirrored session
+            currentWorkoutType = type
+            currentWorkoutEnvironment = environment
+
+            print("WorkoutMirroringManager: Start workout command sent to Watch successfully")
+            print("WorkoutMirroringManager: Waiting for Watch to start workout and mirror session back...")
+
+            // The actual workout session will be handled by handleWatchInitiatedWorkout
+            // when the Watch mirrors the session back to iPhone
+        } catch let error as WatchConnectivityError {
+            print("WorkoutMirroringManager: Failed to send command to Watch: \(error)")
+            mirroringError = error
+            throw WorkoutMirroringError.watchNotReachable
+        } catch {
+            print("WorkoutMirroringManager: Unexpected error: \(error)")
+            mirroringError = error
+            throw WorkoutMirroringError.failedToStart(error)
+        }
+    }
+
+    /// Starts a workout session locally on iPhone (without Watch).
+    /// This can be used as a fallback when Watch is not available.
+    public func startLocalWorkout(type: WorkoutType, environment: WorkoutEnvironment) async throws {
         guard !isMirroring else {
             throw WorkoutMirroringError.sessionAlreadyActive
         }
@@ -103,19 +223,30 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
             session.delegate = self
             mirroredSession = session
 
-            // In iOS 26+, start the workout session directly on iPhone
             let workoutBuilder = session.associatedWorkoutBuilder()
-            workoutBuilder.dataSource = HKLiveWorkoutDataSource(
+            workoutBuilder.delegate = self
+
+            let dataSource = HKLiveWorkoutDataSource(
                 healthStore: healthStore,
                 workoutConfiguration: configuration
             )
+
+            // Explicitly enable step count collection (not automatically collected)
+            if let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
+                dataSource.enableCollection(for: stepCountType, predicate: nil)
+            }
+
+            workoutBuilder.dataSource = dataSource
             builder = workoutBuilder
+
+            print("WorkoutMirroringManager: Starting local workout session on iPhone...")
 
             let startDate = Date()
             session.startActivity(with: startDate)
             try await workoutBuilder.beginCollection(at: startDate)
 
             isMirroring = true
+            isWatchInitiatedWorkout = false
             currentWorkoutType = type
             currentWorkoutEnvironment = environment
             sessionStartDate = startDate
@@ -124,7 +255,10 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
             resetMetrics()
             startMetricsTimer()
 
-            print("WorkoutMirroringManager: Started workout session on iPhone")
+            // Start Live Activity
+            startLiveActivity()
+
+            print("WorkoutMirroringManager: Started local workout session on iPhone at \(startDate)")
         } catch {
             mirroringError = error
             throw WorkoutMirroringError.failedToStart(error)
@@ -153,6 +287,9 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
             try await workoutBuilder.endCollection(at: Date())
             _ = try await workoutBuilder.finishWorkout()
         }
+
+        // End Live Activity
+        endLiveActivity()
 
         cleanup()
         stopMetricsTimer()
@@ -184,14 +321,27 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     }
 
     private func startMetricsTimer() {
-        metricsTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            self?.updateElapsedTime()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.metricsTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.updateElapsedTime()
+                }
+            }
+            // Ensure timer fires even during UI interactions
+            if let timer = self.metricsTimer {
+                RunLoop.main.add(timer, forMode: .common)
+            }
+            print("WorkoutMirroringManager: Metrics timer started")
         }
     }
 
     private func stopMetricsTimer() {
-        metricsTimer?.invalidate()
-        metricsTimer = nil
+        DispatchQueue.main.async { [weak self] in
+            self?.metricsTimer?.invalidate()
+            self?.metricsTimer = nil
+            print("WorkoutMirroringManager: Metrics timer stopped")
+        }
     }
 
     private func updateElapsedTime() {
@@ -239,15 +389,19 @@ extension WorkoutMirroringManager: HKWorkoutSessionDelegate {
         date: Date
     ) {
         DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             switch toState {
             case .running:
-                self?.isPaused = false
-                self?.isMirroring = true
+                self.isPaused = false
+                self.isMirroring = true
+                self.updateLiveActivity()
             case .paused:
-                self?.isPaused = true
+                self.isPaused = true
+                self.updateLiveActivity()
             case .ended:
-                self?.isMirroring = false
-                self?.stopMetricsTimer()
+                self.isMirroring = false
+                self.stopMetricsTimer()
+                self.endLiveActivity()
             default:
                 break
             }
@@ -270,14 +424,92 @@ extension WorkoutMirroringManager: HKWorkoutSessionDelegate {
         for dataItem in data {
             if let metrics = try? JSONDecoder().decode(WorkoutMetricsData.self, from: dataItem) {
                 DispatchQueue.main.async { [weak self] in
-                    self?.distance = metrics.distance
-                    self?.stepCount = metrics.stepCount
-                    self?.activeCalories = metrics.activeCalories
-                    self?.heartRate = metrics.heartRate
-                    self?.averageHeartRate = metrics.averageHeartRate
-                    self?.currentPace = metrics.currentPace
+                    guard let self = self else { return }
+                    self.distance = metrics.distance
+                    self.stepCount = metrics.stepCount
+                    self.activeCalories = metrics.activeCalories
+                    self.heartRate = metrics.heartRate
+                    self.averageHeartRate = metrics.averageHeartRate
+                    self.currentPace = metrics.currentPace
+
+                    // Update Live Activity with new metrics
+                    self.updateLiveActivity()
                 }
             }
+        }
+    }
+}
+
+// MARK: - HKLiveWorkoutBuilderDelegate
+
+extension WorkoutMirroringManager: HKLiveWorkoutBuilderDelegate {
+    public func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
+        // Handle workout events if needed
+    }
+
+    public func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
+        // Log collected types for debugging
+        let typeNames = collectedTypes.compactMap { $0.identifier }
+        print("WorkoutMirroringManager: Received data for types: \(typeNames)")
+
+        // Update metrics from the builder's statistics
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+
+            // Distance
+            if let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning),
+               let statistics = workoutBuilder.statistics(for: distanceType),
+               let sum = statistics.sumQuantity() {
+                let newDistance = sum.doubleValue(for: .meter())
+                self.distance = newDistance
+                print("WorkoutMirroringManager: Distance updated to \(newDistance) meters")
+
+                // Calculate pace (seconds per mile) from distance and elapsed time
+                if self.elapsedTime > 0 && self.distance > 0 {
+                    let speedMetersPerSecond = self.distance / self.elapsedTime
+                    if speedMetersPerSecond > 0 {
+                        // Convert to seconds per mile
+                        self.currentPace = 1609.34 / speedMetersPerSecond
+                    }
+                }
+            }
+
+            // Step count
+            if let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount),
+               let statistics = workoutBuilder.statistics(for: stepType),
+               let sum = statistics.sumQuantity() {
+                let newSteps = Int(sum.doubleValue(for: .count()))
+                self.stepCount = newSteps
+                print("WorkoutMirroringManager: Step count updated to \(newSteps)")
+            }
+
+            // Active calories
+            if let caloriesType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned),
+               let statistics = workoutBuilder.statistics(for: caloriesType),
+               let sum = statistics.sumQuantity() {
+                let newCalories = sum.doubleValue(for: .kilocalorie())
+                self.activeCalories = newCalories
+                print("WorkoutMirroringManager: Calories updated to \(newCalories)")
+            }
+
+            // Heart rate (most recent)
+            if let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate),
+               let statistics = workoutBuilder.statistics(for: heartRateType),
+               let mostRecent = statistics.mostRecentQuantity() {
+                let newHeartRate = mostRecent.doubleValue(for: HKUnit.count().unitDivided(by: .minute()))
+                self.heartRate = newHeartRate
+                print("WorkoutMirroringManager: Heart rate updated to \(newHeartRate)")
+            }
+
+            // Average heart rate
+            if let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate),
+               let statistics = workoutBuilder.statistics(for: heartRateType),
+               let average = statistics.averageQuantity() {
+                self.averageHeartRate = average.doubleValue(for: HKUnit.count().unitDivided(by: .minute()))
+            }
+
+            // Update Live Activity with new metrics
+            self.updateLiveActivity()
         }
     }
 }

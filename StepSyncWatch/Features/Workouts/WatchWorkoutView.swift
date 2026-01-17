@@ -290,28 +290,44 @@ struct ActiveWatchWorkoutView: View {
     private func endWorkout() {
         WKInterfaceDevice.current().play(.success)
 
+        // Capture metrics before ending (they get reset during cleanup)
+        let duration = sessionManager.elapsedTime
+        let distance = sessionManager.distance
+        let steps = sessionManager.stepCount
+        let calories = sessionManager.activeCalories
+        let avgHeartRate = sessionManager.averageHeartRate
+        let avgPace = sessionManager.averagePace
+        let avgCadence = sessionManager.cadence
+
         Task {
             do {
                 let hkWorkout = try await sessionManager.endWorkout()
 
                 await MainActor.run {
                     if let workout = currentWorkout {
-                        workout.duration = sessionManager.elapsedTime
-                        workout.distance = sessionManager.distance
-                        workout.stepCount = sessionManager.stepCount
-                        workout.activeCalories = sessionManager.activeCalories
-                        workout.averageHeartRate = sessionManager.averageHeartRate > 0 ? sessionManager.averageHeartRate : nil
-                        workout.averagePace = sessionManager.averagePace > 0 ? sessionManager.averagePace : nil
-                        workout.averageCadence = sessionManager.cadence > 0 ? sessionManager.cadence : nil
+                        workout.duration = duration
+                        workout.distance = distance
+                        workout.stepCount = steps
+                        workout.activeCalories = calories
+                        workout.averageHeartRate = avgHeartRate > 0 ? avgHeartRate : nil
+                        workout.averagePace = avgPace > 0 ? avgPace : nil
+                        workout.averageCadence = avgCadence > 0 ? avgCadence : nil
                         workout.healthKitWorkoutID = hkWorkout?.uuid
                         workout.complete()
 
                         try? modelContext.save()
                     }
                     currentWorkout = nil
+
+                    // Force reset all metrics to clear the UI
+                    sessionManager.resetAfterWorkout()
                 }
             } catch {
                 print("Failed to end workout: \(error)")
+                await MainActor.run {
+                    // Still reset on failure to clear the UI
+                    sessionManager.resetAfterWorkout()
+                }
                 WKInterfaceDevice.current().play(.failure)
             }
         }

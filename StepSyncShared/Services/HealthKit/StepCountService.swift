@@ -2,6 +2,7 @@ import Foundation
 import SwiftData
 import HealthKit
 import Observation
+import WidgetKit
 
 @Observable
 @MainActor
@@ -10,13 +11,21 @@ public final class StepCountService: @unchecked Sendable {
     private var modelContext: ModelContext?
     private var observerQuery: HKObserverQuery?
     private var isObserving = false
+    private let appGroupID = "group.com.nwwsolutions.steppingszn"
 
     public private(set) var todayStepCount: Int = 0
     public private(set) var todayDistance: Double = 0
     public private(set) var todayCalories: Double = 0
+    public private(set) var dailyGoal: Int = 10000
+    public private(set) var currentStreak: Int = 0
     public private(set) var isLoading = false
     public private(set) var lastError: Error?
     public private(set) var isAuthorized = false
+
+    /// Shared UserDefaults for widget communication
+    private var sharedDefaults: UserDefaults? {
+        UserDefaults(suiteName: appGroupID)
+    }
 
     public init(healthKitManager: HealthKitManager = .shared) {
         self.healthKitManager = healthKitManager
@@ -73,12 +82,68 @@ public final class StepCountService: @unchecked Sendable {
             }
 
             await updateDailyRecord()
+            await fetchGoalAndStreak()
+            syncToWidgets()
         } catch {
             await MainActor.run {
                 lastError = error
                 isLoading = false
             }
         }
+    }
+
+    /// Fetches the current daily goal and streak from SwiftData
+    private func fetchGoalAndStreak() async {
+        guard let modelContext = modelContext else { return }
+
+        // Fetch current goal
+        let goalDescriptor = FetchDescriptor<StepGoal>(
+            sortBy: [SortDescriptor(\StepGoal.createdAt, order: .reverse)]
+        )
+
+        do {
+            let goals = try modelContext.fetch(goalDescriptor)
+            if let currentGoal = goals.first {
+                await MainActor.run {
+                    self.dailyGoal = currentGoal.dailyTarget
+                }
+            }
+        } catch {
+            print("StepCountService: Failed to fetch goal: \(error)")
+        }
+
+        // Fetch current streak
+        let streakDescriptor = FetchDescriptor<Streak>(
+            sortBy: [SortDescriptor(\Streak.updatedAt, order: .reverse)]
+        )
+
+        do {
+            let streaks = try modelContext.fetch(streakDescriptor)
+            if let streak = streaks.first {
+                await MainActor.run {
+                    self.currentStreak = streak.currentStreak
+                }
+            } else {
+                await MainActor.run {
+                    self.currentStreak = 0
+                }
+            }
+        } catch {
+            print("StepCountService: Failed to fetch streak: \(error)")
+        }
+    }
+
+    /// Syncs current data to shared UserDefaults for widgets
+    public func syncToWidgets() {
+        sharedDefaults?.set(todayStepCount, forKey: "todayStepCount")
+        sharedDefaults?.set(dailyGoal, forKey: "dailyGoal")
+        sharedDefaults?.set(currentStreak, forKey: "currentStreak")
+        sharedDefaults?.synchronize()
+
+        // Request widget timeline reload
+        WidgetCenter.shared.reloadAllTimelines()
+
+        print("StepCountService: Synced to widgets - steps: \(todayStepCount), goal: \(dailyGoal), streak: \(currentStreak)")
     }
 
     private func updateDailyRecord() async {

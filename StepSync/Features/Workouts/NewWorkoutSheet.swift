@@ -12,8 +12,47 @@ struct NewWorkoutSheet: View {
     @State private var isStartingWorkout = false
     @State private var errorMessage: String?
     @State private var showingError = false
+    @State private var showingLocalFallback = false
+
+    private var connectivityManager: WatchConnectivityManager {
+        WatchConnectivityManager.shared
+    }
 
     var onWorkoutStarted: ((Workout, Bool) -> Void)?
+
+    // MARK: - Watch Status Helpers
+
+    private var watchStatusColor: Color {
+        if connectivityManager.isReachable {
+            return .green
+        } else if !connectivityManager.isPaired {
+            return .red
+        } else if !connectivityManager.isWatchAppInstalled {
+            return .red
+        } else {
+            return .orange
+        }
+    }
+
+    private var watchStatusMessage: String {
+        if connectivityManager.isReachable {
+            return "Watch is connected"
+        } else if !connectivityManager.isPaired {
+            return "Apple Watch is not paired"
+        } else if !connectivityManager.isWatchAppInstalled {
+            return "StepSync is not installed on Watch"
+        } else {
+            return "Watch not reachable - open StepSync on your Watch"
+        }
+    }
+
+    private var watchDetailedStatus: String {
+        var parts: [String] = []
+        parts.append("Paired: \(connectivityManager.isPaired ? "Yes" : "No")")
+        parts.append("Installed: \(connectivityManager.isWatchAppInstalled ? "Yes" : "No")")
+        parts.append("Reachable: \(connectivityManager.isReachable ? "Yes" : "No")")
+        return parts.joined(separator: " • ")
+    }
 
     var body: some View {
         NavigationStack {
@@ -52,6 +91,16 @@ struct NewWorkoutSheet: View {
                 Button("OK") {}
             } message: {
                 Text(errorMessage ?? "An unknown error occurred")
+            }
+            .alert("Watch Not Reachable", isPresented: $showingLocalFallback) {
+                Button("Start on iPhone") {
+                    startLocalWorkout()
+                }
+                Button("Cancel", role: .cancel) {
+                    isStartingWorkout = false
+                }
+            } message: {
+                Text("Your Apple Watch is not reachable. Would you like to start the workout on iPhone instead? Note: Heart rate and step count will be limited without Watch.")
             }
         }
     }
@@ -125,6 +174,30 @@ struct NewWorkoutSheet: View {
             .padding()
             .background(Color(.systemGray6))
             .clipShape(RoundedRectangle(cornerRadius: 12))
+
+            // Watch connectivity status
+            if startOnWatch {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 8) {
+                        Circle()
+                            .fill(watchStatusColor)
+                            .frame(width: 8, height: 8)
+
+                        Text(watchStatusMessage)
+                            .font(.caption)
+                            .foregroundStyle(watchStatusColor)
+                    }
+
+                    // Show detailed status for debugging
+                    if !connectivityManager.isReachable {
+                        Text(watchDetailedStatus)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 4)
+            }
         }
     }
 
@@ -155,15 +228,8 @@ struct NewWorkoutSheet: View {
         isStartingWorkout = true
         errorMessage = nil
 
-        let workout = Workout(
-            type: selectedType,
-            environment: selectedEnvironment,
-            startDate: Date()
-        )
-        modelContext.insert(workout)
-
         if startOnWatch {
-            // Start workout on Apple Watch via mirroring
+            // Start workout on Apple Watch via WatchConnectivity
             Task {
                 do {
                     try await mirroringManager.startMirroredWorkout(
@@ -171,34 +237,72 @@ struct NewWorkoutSheet: View {
                         environment: selectedEnvironment
                     )
 
+                    // Create workout record
+                    let workout = Workout(
+                        type: selectedType,
+                        environment: selectedEnvironment,
+                        startDate: Date()
+                    )
+
                     await MainActor.run {
+                        modelContext.insert(workout)
                         try? modelContext.save()
                         onWorkoutStarted?(workout, true)
                         dismiss()
                     }
                 } catch {
                     await MainActor.run {
-                        isStartingWorkout = false
-                        errorMessage = error.localizedDescription
-
-                        // If mirroring fails, offer to start on phone only
+                        // Check if it's a reachability issue and offer local fallback
                         if let mirroringError = error as? WorkoutMirroringError {
                             switch mirroringError {
-                            case .watchNotReachable, .mirroringFailed:
-                                errorMessage = "Could not connect to Apple Watch. Make sure your Watch is nearby, unlocked, and has StpnSzn installed."
+                            case .watchNotReachable:
+                                showingLocalFallback = true
+                                return
                             default:
                                 errorMessage = mirroringError.localizedDescription
                             }
+                        } else {
+                            errorMessage = error.localizedDescription
                         }
+
+                        isStartingWorkout = false
                         showingError = true
                     }
                 }
             }
         } else {
-            // Start workout on iPhone only
-            try? modelContext.save()
-            onWorkoutStarted?(workout, false)
-            dismiss()
+            // Start workout on iPhone only (no Watch)
+            startLocalWorkout()
+        }
+    }
+
+    private func startLocalWorkout() {
+        Task {
+            do {
+                try await mirroringManager.startLocalWorkout(
+                    type: selectedType,
+                    environment: selectedEnvironment
+                )
+
+                let workout = Workout(
+                    type: selectedType,
+                    environment: selectedEnvironment,
+                    startDate: Date()
+                )
+
+                await MainActor.run {
+                    modelContext.insert(workout)
+                    try? modelContext.save()
+                    onWorkoutStarted?(workout, false)
+                    dismiss()
+                }
+            } catch {
+                await MainActor.run {
+                    isStartingWorkout = false
+                    errorMessage = error.localizedDescription
+                    showingError = true
+                }
+            }
         }
     }
 }

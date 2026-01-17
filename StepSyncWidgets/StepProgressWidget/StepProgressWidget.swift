@@ -36,7 +36,7 @@ struct StepProgressProvider: TimelineProvider {
     }
 
     private func loadEntry() -> StepProgressEntry {
-        let userDefaults = UserDefaults(suiteName: "group.com.nwwsolutions.stepsync")
+        let userDefaults = UserDefaults(suiteName: "group.com.nwwsolutions.steppingszn")
 
         let stepCount = userDefaults?.integer(forKey: "todayStepCount") ?? 0
         let goalTarget = userDefaults?.integer(forKey: "dailyGoal") ?? 10000
