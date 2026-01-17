@@ -186,15 +186,19 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
             try await builder?.beginCollection(at: startDate)
 
             // Enable mirroring to iPhone companion app
+            print("WorkoutSessionManager: 📱 Calling startMirroringToCompanionDevice...")
             session?.startMirroringToCompanionDevice { [weak self] success, error in
                 if let error = error {
-                    print("WorkoutSessionManager: Failed to start mirroring: \(error)")
+                    print("WorkoutSessionManager: ❌ Failed to start mirroring: \(error)")
+                    print("WorkoutSessionManager: Error localized: \(error.localizedDescription)")
                 } else if success {
-                    print("WorkoutSessionManager: Started mirroring to companion device")
+                    print("WorkoutSessionManager: ✅ Successfully started mirroring to companion device")
                     DispatchQueue.main.async {
                         self?.isMirroringToCompanion = true
                         self?.startMetricsSendTimer()
                     }
+                } else {
+                    print("WorkoutSessionManager: ⚠️ startMirroringToCompanionDevice returned success=false with no error")
                 }
             }
 

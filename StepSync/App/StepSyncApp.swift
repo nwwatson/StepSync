@@ -43,6 +43,13 @@ struct StepSyncApp: App {
         } catch {
             fatalError("Could not initialize ModelContainer: \(error)")
         }
+
+        // Initialize WorkoutMirroringManager early to set up the mirroring handler
+        // This ensures we can receive workout sessions from Apple Watch even when
+        // the app is launched from background
+        print("StepSyncApp: Initializing WorkoutMirroringManager.shared in init()")
+        _ = WorkoutMirroringManager.shared
+        print("StepSyncApp: WorkoutMirroringManager.shared initialized")
     }
 
     var body: some Scene {
