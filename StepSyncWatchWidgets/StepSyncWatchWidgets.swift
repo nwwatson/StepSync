@@ -6,5 +6,7 @@ struct StepSyncWatchWidgetBundle: WidgetBundle {
     var body: some Widget {
         StepCountComplication()
         WorkoutComplication()
+        StartWalkComplication()
+        StartRunComplication()
     }
 }

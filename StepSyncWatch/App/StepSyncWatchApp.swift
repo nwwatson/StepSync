@@ -9,6 +9,7 @@ struct StepSyncWatchApp: App {
     @State private var healthKitManager = HealthKitManager.shared
     @State private var stepCountService = StepCountService()
     @State private var workoutSessionManager = WorkoutSessionManager.shared
+    @State private var quickStartState = QuickStartState.shared
 
     /// WatchConnectivity manager for iPhone communication
     private var connectivityManager: WatchConnectivityManager {
@@ -70,9 +71,19 @@ struct StepSyncWatchApp: App {
                 .environment(healthKitManager)
                 .environment(stepCountService)
                 .environment(workoutSessionManager)
+                .environment(quickStartState)
                 .task {
                     await requestHealthKitAuthorization()
                     stepCountService.configure(with: modelContainer.mainContext)
+                }
+                .onOpenURL { url in
+                    print("StepSyncWatchApp: Received URL: \(url)")
+                    // Don't show picker if a workout is already active
+                    guard !workoutSessionManager.isSessionActive else {
+                        print("StepSyncWatchApp: Workout already active, ignoring URL")
+                        return
+                    }
+                    quickStartState.handleURL(url)
                 }
         }
     }

@@ -30,6 +30,17 @@
 	<true/>
 	<key>WKCompanionAppBundleIdentifier</key>
 	<string>com.nwwsolutions.stepsync</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.nwwsolutions.stepsync.watch</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>stepsync</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
