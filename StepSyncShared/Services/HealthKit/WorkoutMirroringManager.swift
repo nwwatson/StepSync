@@ -57,6 +57,7 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
 
     private override init() {
         super.init()
+        print("WorkoutMirroringManager: Singleton initialized")
         #if os(iOS)
         setupWatchWorkoutHandler()
         #endif
@@ -65,30 +66,40 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     #if os(iOS)
     /// Sets up the handler for receiving workout sessions started on Apple Watch
     private func setupWatchWorkoutHandler() {
+        print("WorkoutMirroringManager: Setting up workoutSessionMirroringStartHandler")
         healthStore.workoutSessionMirroringStartHandler = { [weak self] mirroredSession in
+            print("WorkoutMirroringManager: 🎯 workoutSessionMirroringStartHandler CALLED - received mirrored session!")
+            print("WorkoutMirroringManager: Session activity type: \(mirroredSession.workoutConfiguration.activityType.rawValue)")
+            print("WorkoutMirroringManager: Session location type: \(mirroredSession.workoutConfiguration.locationType.rawValue)")
             Task { @MainActor in
                 self?.handleWatchInitiatedWorkout(mirroredSession)
             }
         }
+        print("WorkoutMirroringManager: workoutSessionMirroringStartHandler has been set")
     }
 
     /// Handles a workout session that was initiated on Apple Watch
     @MainActor
     private func handleWatchInitiatedWorkout(_ session: HKWorkoutSession) {
+        print("WorkoutMirroringManager: handleWatchInitiatedWorkout called")
+
         guard !isMirroring else {
             print("WorkoutMirroringManager: Cannot start watch workout - session already active")
             return
         }
 
+        print("WorkoutMirroringManager: Setting up mirrored session...")
         mirroredSession = session
         session.delegate = self
 
         // Extract workout type from configuration
         let activityType = session.workoutConfiguration.activityType
         currentWorkoutType = activityType == .running ? .running : .walking
+        print("WorkoutMirroringManager: Workout type determined as: \(currentWorkoutType?.displayName ?? "unknown")")
 
         let locationType = session.workoutConfiguration.locationType
         currentWorkoutEnvironment = locationType == .indoor ? .indoor : .outdoor
+        print("WorkoutMirroringManager: Environment determined as: \(currentWorkoutEnvironment?.displayName ?? "unknown")")
 
         isMirroring = true
         isWatchInitiatedWorkout = true
@@ -99,9 +110,10 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
         startMetricsTimer()
 
         // Start Live Activity
+        print("WorkoutMirroringManager: About to start Live Activity...")
         startLiveActivity()
 
-        print("WorkoutMirroringManager: Started receiving watch-initiated workout session")
+        print("WorkoutMirroringManager: ✅ Completed handling watch-initiated workout session")
     }
     #endif
 
@@ -114,6 +126,11 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
             print("WorkoutMirroringManager: Live Activities require iOS 16.1+")
             return
         }
+
+        print("WorkoutMirroringManager: startLiveActivity() called")
+
+        // Debug print activity state before starting
+        liveActivityManager.debugPrintActivityState()
 
         let userDefaults = UserDefaults(suiteName: appGroupID)
         let dailyGoal = userDefaults?.integer(forKey: "dailyGoal") ?? 10000
@@ -133,9 +150,11 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
         )
 
         if success {
-            print("WorkoutMirroringManager: Live Activity started successfully")
+            print("WorkoutMirroringManager: ✅ Live Activity started successfully")
+            // Debug print activity state after starting
+            liveActivityManager.debugPrintActivityState()
         } else {
-            print("WorkoutMirroringManager: Failed to start Live Activity - check if Live Activities are enabled in Settings")
+            print("WorkoutMirroringManager: ❌ Failed to start Live Activity - check if Live Activities are enabled in Settings")
         }
     }
 

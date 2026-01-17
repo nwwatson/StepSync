@@ -18,7 +18,26 @@ public final class LiveActivityManager: @unchecked Sendable {
 
     /// Whether Live Activities are supported on this device
     public var areActivitiesEnabled: Bool {
-        ActivityAuthorizationInfo().areActivitiesEnabled
+        let authInfo = ActivityAuthorizationInfo()
+        print("LiveActivityManager: ActivityAuthorizationInfo - areActivitiesEnabled: \(authInfo.areActivitiesEnabled)")
+        print("LiveActivityManager: ActivityAuthorizationInfo - frequentPushesEnabled: \(authInfo.frequentPushesEnabled)")
+        return authInfo.areActivitiesEnabled
+    }
+
+    /// Check and print current activity state for debugging
+    public func debugPrintActivityState() {
+        print("LiveActivityManager: === Debug Activity State ===")
+        print("LiveActivityManager: areActivitiesEnabled = \(areActivitiesEnabled)")
+        print("LiveActivityManager: hasActiveActivity = \(hasActiveActivity)")
+        print("LiveActivityManager: currentActivity = \(String(describing: currentActivity))")
+
+        // Print all activities of this type
+        let activities = Activity<WorkoutActivityAttributes>.activities
+        print("LiveActivityManager: Total WorkoutActivityAttributes activities: \(activities.count)")
+        for activity in activities {
+            print("LiveActivityManager: - Activity ID: \(activity.id), state: \(activity.activityState)")
+        }
+        print("LiveActivityManager: === End Debug ===")
     }
 
     /// Whether a workout Live Activity is currently active
@@ -42,13 +61,18 @@ public final class LiveActivityManager: @unchecked Sendable {
         initialSteps: Int = 0,
         initialDailySteps: Int = 0
     ) -> Bool {
+        print("LiveActivityManager: startWorkoutActivity called")
+        print("LiveActivityManager: areActivitiesEnabled = \(areActivitiesEnabled)")
+
         guard areActivitiesEnabled else {
-            print("LiveActivityManager: Live Activities not enabled")
+            print("LiveActivityManager: ❌ Live Activities not enabled in Settings")
+            print("LiveActivityManager: User needs to enable Live Activities in Settings > StpnSzn > Live Activities")
             return false
         }
 
         // End any existing activity first
         if currentActivity != nil {
+            print("LiveActivityManager: Ending existing activity before starting new one")
             endWorkoutActivity()
         }
 
@@ -74,16 +98,21 @@ public final class LiveActivityManager: @unchecked Sendable {
             relevanceScore: 100
         )
 
+        print("LiveActivityManager: Requesting Activity with attributes: type=\(workoutType), icon=\(workoutIcon), goal=\(dailyGoal)")
+
         do {
             currentActivity = try Activity.request(
                 attributes: attributes,
                 content: content,
                 pushType: nil
             )
-            print("LiveActivityManager: Started workout Live Activity")
+            print("LiveActivityManager: ✅ Successfully started workout Live Activity")
+            print("LiveActivityManager: Activity ID: \(currentActivity?.id ?? "unknown")")
             return true
         } catch {
-            print("LiveActivityManager: Failed to start Live Activity: \(error)")
+            print("LiveActivityManager: ❌ Failed to start Live Activity")
+            print("LiveActivityManager: Error: \(error)")
+            print("LiveActivityManager: Error localized: \(error.localizedDescription)")
             return false
         }
     }
