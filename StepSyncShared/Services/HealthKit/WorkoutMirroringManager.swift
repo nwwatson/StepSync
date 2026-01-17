@@ -110,7 +110,10 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
 
     /// Starts the Live Activity for the workout
     private func startLiveActivity() {
-        guard #available(iOS 16.1, *) else { return }
+        guard #available(iOS 16.1, *) else {
+            print("WorkoutMirroringManager: Live Activities require iOS 16.1+")
+            return
+        }
 
         let userDefaults = UserDefaults(suiteName: appGroupID)
         let dailyGoal = userDefaults?.integer(forKey: "dailyGoal") ?? 10000
@@ -119,13 +122,21 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
         let workoutTypeName = currentWorkoutType?.displayName ?? "Workout"
         let workoutIcon = currentWorkoutType?.systemImage ?? "figure.walk"
 
-        liveActivityManager.startWorkoutActivity(
+        print("WorkoutMirroringManager: Starting Live Activity - type: \(workoutTypeName), icon: \(workoutIcon), dailyGoal: \(dailyGoal), todaySteps: \(todaySteps)")
+
+        let success = liveActivityManager.startWorkoutActivity(
             workoutType: workoutTypeName,
             workoutIcon: workoutIcon,
             dailyGoal: dailyGoal,
             initialSteps: 0,
             initialDailySteps: todaySteps
         )
+
+        if success {
+            print("WorkoutMirroringManager: Live Activity started successfully")
+        } else {
+            print("WorkoutMirroringManager: Failed to start Live Activity - check if Live Activities are enabled in Settings")
+        }
     }
 
     /// Updates the Live Activity with current metrics

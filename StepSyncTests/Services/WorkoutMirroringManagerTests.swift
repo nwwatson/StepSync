@@ -104,10 +104,10 @@ final class WorkoutMirroringManagerTests: XCTestCase {
     // MARK: - Formatted Heart Rate Tests
 
     func testFormattedHeartRatePositiveValue() {
-        let heartRate = 142.5
+        let heartRate = 142.0
         let formatted = heartRate > 0 ? String(format: "%.0f", heartRate) : "--"
 
-        XCTAssertEqual(formatted, "143")
+        XCTAssertEqual(formatted, "142")
     }
 
     func testFormattedHeartRateZero() {

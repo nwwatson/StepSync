@@ -41,6 +41,7 @@
 	<array>
 		<string>location</string>
 		<string>remote-notification</string>
+		<string>workout-processing</string>
 	</array>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
