@@ -24,6 +24,17 @@
 	</array>
 	<key>WKWatchOnly</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.nwwsolutions.stepsync.watch</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>stepsync</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSHealthShareUsageDescription</key>
 	<string>StepSync needs access to your health data to track your steps and fitness progress.</string>
 	<key>NSHealthUpdateUsageDescription</key>
