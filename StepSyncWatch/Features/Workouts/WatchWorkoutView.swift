@@ -176,11 +176,25 @@ struct EnvironmentWatchButton: View {
 struct ActiveWatchWorkoutView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(WorkoutSessionManager.self) private var sessionManager
+    @Environment(\.isLuminanceReduced) private var isLuminanceReduced
 
     @Binding var currentWorkout: Workout?
     @State private var showingEndConfirmation = false
 
     var body: some View {
+        Group {
+            if isLuminanceReduced {
+                ReducedLuminanceWorkoutView()
+            } else {
+                fullWorkoutView
+            }
+        }
+        .onChange(of: isLuminanceReduced) { _, newValue in
+            sessionManager.setLuminanceReduced(newValue)
+        }
+    }
+
+    private var fullWorkoutView: some View {
         ScrollView {
             VStack(spacing: 12) {
                 // Workout type indicator
