@@ -41,6 +41,13 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
     private var isMirroringToCompanion: Bool = false
     private var metricsSendTimer: Timer?
 
+    // Battery conservation: luminance-aware timer intervals
+    private var isLuminanceReduced: Bool = false
+    private let normalUpdateInterval: TimeInterval = 1.0
+    private let reducedUpdateInterval: TimeInterval = 5.0
+    private let normalMetricsInterval: TimeInterval = 2.0
+    private let reducedMetricsInterval: TimeInterval = 10.0
+
     private override init() {
         super.init()
         #if os(watchOS)
@@ -114,8 +121,10 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
     }
 
     /// Starts a timer to periodically send metrics back to the iPhone
+    /// Uses reduced interval when display luminance is reduced to save battery
     private func startMetricsSendTimer() {
-        metricsSendTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in
+        let interval = currentMetricsInterval
+        metricsSendTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
             self?.sendMetricsToPhone()
         }
     }
@@ -279,6 +288,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         sessionStartDate = nil
         pausedTime = 0
         lastPauseDate = nil
+        isLuminanceReduced = false
     }
 
     /// Resets metrics and cleans up session state on main thread for proper UI updates
@@ -298,6 +308,7 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         sessionStartDate = nil
         pausedTime = 0
         lastPauseDate = nil
+        isLuminanceReduced = false
         resetMetrics()
     }
 
@@ -309,9 +320,53 @@ public final class WorkoutSessionManager: NSObject, @unchecked Sendable {
         cleanupAndResetOnMain()
     }
 
+    // MARK: - Battery Conservation (Luminance-Aware Timers)
+
+    /// Sets whether the display is in reduced luminance mode (always-on display dimmed).
+    /// Adjusts timer intervals to conserve battery when the screen is dimmed.
+    /// HealthKit data collection continues unchanged - only UI updates and iPhone transmission are throttled.
+    @MainActor
+    public func setLuminanceReduced(_ reduced: Bool) {
+        guard isLuminanceReduced != reduced else { return }
+        isLuminanceReduced = reduced
+
+        #if os(watchOS)
+        // Restart timers with appropriate intervals if session is active and not paused
+        if isSessionActive && !isPaused {
+            restartTimersWithCurrentIntervals()
+        }
+        #endif
+    }
+
+    /// Returns the current UI update interval based on luminance state
+    private var currentUpdateInterval: TimeInterval {
+        isLuminanceReduced ? reducedUpdateInterval : normalUpdateInterval
+    }
+
+    /// Returns the current metrics send interval based on luminance state
+    private var currentMetricsInterval: TimeInterval {
+        isLuminanceReduced ? reducedMetricsInterval : normalMetricsInterval
+    }
+
+    #if os(watchOS)
+    /// Restarts both update and metrics timers with the current interval settings
+    private func restartTimersWithCurrentIntervals() {
+        // Restart update timer
+        stopUpdateTimer()
+        startUpdateTimer()
+
+        // Restart metrics send timer if mirroring is active
+        if isMirroredSession || isMirroringToCompanion {
+            stopMetricsSendTimer()
+            startMetricsSendTimer()
+        }
+    }
+    #endif
+
     private func startUpdateTimer() {
+        let interval = currentUpdateInterval
         DispatchQueue.main.async { [weak self] in
-            self?.updateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.updateTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.updateElapsedTime()
                 }
