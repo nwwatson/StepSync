@@ -55,9 +55,11 @@ struct WorkoutListView: View {
             .refreshable {
                 await syncFromHealthKit()
             }
-            .task {
-                // Sync from HealthKit on first appear
-                await syncFromHealthKit()
+            .onAppear {
+                // Sync from HealthKit every time view appears
+                Task {
+                    await syncFromHealthKit()
+                }
             }
         }
     }
