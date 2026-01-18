@@ -107,9 +107,17 @@ public final class Workout {
         return String(format: "%d'%02d\"/mi", paceMinutes, paceSeconds)
     }
 
-    public func complete(endDate: Date = Date()) {
+    /// Marks the workout as completed.
+    /// - Parameters:
+    ///   - endDate: The end date of the workout. Defaults to now.
+    ///   - preserveDuration: If true, keeps the existing duration value (useful when duration
+    ///                       is set from HealthKit which accounts for pauses). If false, calculates
+    ///                       duration from startDate to endDate.
+    public func complete(endDate: Date = Date(), preserveDuration: Bool = false) {
         self.endDate = endDate
-        self.duration = endDate.timeIntervalSince(startDate)
+        if !preserveDuration || self.duration == 0 {
+            self.duration = endDate.timeIntervalSince(startDate)
+        }
         self.isCompleted = true
         self.updatedAt = Date()
     }
