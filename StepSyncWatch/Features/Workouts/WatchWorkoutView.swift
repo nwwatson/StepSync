@@ -98,7 +98,13 @@ struct WatchWorkoutView: View {
                 await MainActor.run {
                     let workout = Workout(type: selectedType, environment: selectedEnvironment)
                     modelContext.insert(workout)
-                    try? modelContext.save()
+                    do {
+                        try modelContext.save()
+                        print("WorkoutView: Successfully created and saved new workout")
+                    } catch {
+                        print("WorkoutView: ERROR - Failed to save new workout: \(error)")
+                        // Continue anyway - workout is in memory and will be saved when completed
+                    }
                     currentWorkout = workout
                     isStarting = false
                 }
@@ -319,6 +325,8 @@ struct ActiveWatchWorkoutView: View {
 
                 await MainActor.run {
                     if let workout = currentWorkout {
+                        // Set metrics from HealthKit first
+                        // Use HealthKit duration which accurately accounts for pauses
                         workout.duration = duration
                         workout.distance = distance
                         workout.stepCount = steps
@@ -327,9 +335,19 @@ struct ActiveWatchWorkoutView: View {
                         workout.averagePace = avgPace > 0 ? avgPace : nil
                         workout.averageCadence = avgCadence > 0 ? avgCadence : nil
                         workout.healthKitWorkoutID = hkWorkout?.uuid
-                        workout.complete()
 
-                        try? modelContext.save()
+                        // Mark as completed, preserving the duration we just set from HealthKit
+                        workout.complete(preserveDuration: true)
+
+                        do {
+                            try modelContext.save()
+                            print("WorkoutView: Successfully saved completed workout - duration: \(duration)s, distance: \(distance)m, steps: \(steps), isCompleted: \(workout.isCompleted)")
+                        } catch {
+                            print("WorkoutView: ERROR - Failed to save completed workout: \(error)")
+                            // The workout is still in memory and may sync via CloudKit eventually
+                        }
+                    } else {
+                        print("WorkoutView: WARNING - No current workout to save metrics to")
                     }
                     currentWorkout = nil
 

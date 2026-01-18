@@ -363,6 +363,143 @@ public final class HealthKitManager: @unchecked Sendable {
     public func stopObserving(query: HKQuery) {
         healthStore.stop(query)
     }
+
+    // MARK: - Workout Queries
+
+    /// Represents a workout retrieved from HealthKit
+    public struct HealthKitWorkout: Sendable {
+        public let uuid: UUID
+        public let workoutType: WorkoutType
+        public let environment: WorkoutEnvironment
+        public let startDate: Date
+        public let endDate: Date
+        public let duration: TimeInterval
+        public let distance: Double // in meters
+        public let activeCalories: Double
+        public let stepCount: Int
+
+        public init(
+            uuid: UUID,
+            workoutType: WorkoutType,
+            environment: WorkoutEnvironment,
+            startDate: Date,
+            endDate: Date,
+            duration: TimeInterval,
+            distance: Double,
+            activeCalories: Double,
+            stepCount: Int
+        ) {
+            self.uuid = uuid
+            self.workoutType = workoutType
+            self.environment = environment
+            self.startDate = startDate
+            self.endDate = endDate
+            self.duration = duration
+            self.distance = distance
+            self.activeCalories = activeCalories
+            self.stepCount = stepCount
+        }
+    }
+
+    /// Fetches walking and running workouts from HealthKit for the specified date range
+    /// - Parameters:
+    ///   - startDate: The start date of the range
+    ///   - endDate: The end date of the range (defaults to now)
+    /// - Returns: Array of HealthKitWorkout objects
+    public func getWorkouts(from startDate: Date, to endDate: Date = Date()) async throws -> [HealthKitWorkout] {
+        let workoutType = HKObjectType.workoutType()
+
+        // Create predicate for date range and activity types (walking and running)
+        let datePredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
+        let walkingPredicate = HKQuery.predicateForWorkouts(with: .walking)
+        let runningPredicate = HKQuery.predicateForWorkouts(with: .running)
+        let activityPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [walkingPredicate, runningPredicate])
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, activityPredicate])
+
+        return try await withCheckedThrowingContinuation { continuation in
+            let query = HKSampleQuery(
+                sampleType: workoutType,
+                predicate: predicate,
+                limit: HKObjectQueryNoLimit,
+                sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)]
+            ) { _, samples, error in
+                if let error = error {
+                    print("HealthKitManager: Failed to fetch workouts: \(error)")
+                    continuation.resume(throwing: HealthKitError.queryFailed(error))
+                    return
+                }
+
+                guard let workouts = samples as? [HKWorkout] else {
+                    continuation.resume(returning: [])
+                    return
+                }
+
+                let healthKitWorkouts = workouts.map { workout -> HealthKitWorkout in
+                    // Determine workout type
+                    let type: WorkoutType = workout.workoutActivityType == .running ? .running : .walking
+
+                    // Determine environment (indoor/outdoor)
+                    let environment: WorkoutEnvironment
+                    if let metadata = workout.metadata,
+                       let indoorWorkout = metadata[HKMetadataKeyIndoorWorkout] as? Bool {
+                        environment = indoorWorkout ? .indoor : .outdoor
+                    } else {
+                        environment = .outdoor // Default to outdoor
+                    }
+
+                    // Get distance
+                    let distance: Double
+                    if let distanceQuantity = workout.statistics(for: HKQuantityType(.distanceWalkingRunning))?.sumQuantity() {
+                        distance = distanceQuantity.doubleValue(for: .meter())
+                    } else {
+                        distance = 0
+                    }
+
+                    // Get calories
+                    let calories: Double
+                    if let caloriesQuantity = workout.statistics(for: HKQuantityType(.activeEnergyBurned))?.sumQuantity() {
+                        calories = caloriesQuantity.doubleValue(for: .kilocalorie())
+                    } else {
+                        calories = 0
+                    }
+
+                    // Get step count
+                    let stepCount: Int
+                    if let stepsQuantity = workout.statistics(for: HKQuantityType(.stepCount))?.sumQuantity() {
+                        stepCount = Int(stepsQuantity.doubleValue(for: .count()))
+                    } else {
+                        stepCount = 0
+                    }
+
+                    return HealthKitWorkout(
+                        uuid: workout.uuid,
+                        workoutType: type,
+                        environment: environment,
+                        startDate: workout.startDate,
+                        endDate: workout.endDate,
+                        duration: workout.duration,
+                        distance: distance,
+                        activeCalories: calories,
+                        stepCount: stepCount
+                    )
+                }
+
+                print("HealthKitManager: Found \(healthKitWorkouts.count) workouts in HealthKit")
+                continuation.resume(returning: healthKitWorkouts)
+            }
+
+            healthStore.execute(query)
+        }
+    }
+
+    /// Fetches workouts from the last N days
+    public func getRecentWorkouts(days: Int = 30) async throws -> [HealthKitWorkout] {
+        let calendar = Calendar.current
+        guard let startDate = calendar.date(byAdding: .day, value: -days, to: Date()) else {
+            return []
+        }
+        return try await getWorkouts(from: startDate)
+    }
 }
 
 public enum HealthKitError: LocalizedError {
