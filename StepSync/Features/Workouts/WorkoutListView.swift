@@ -13,6 +13,10 @@ struct WorkoutListView: View {
     @State private var activeWorkout: Workout?
     @State private var isWatchWorkout = false
     @State private var navigationPath = NavigationPath()
+    @State private var isSyncing = false
+    @State private var syncedCount = 0
+
+    private let syncService = WorkoutSyncService.shared
 
     var body: some View {
         NavigationStack(path: $navigationPath) {
@@ -48,6 +52,25 @@ struct WorkoutListView: View {
             .navigationDestination(for: Workout.self) { workout in
                 WorkoutDetailView(workout: workout)
             }
+            .refreshable {
+                await syncFromHealthKit()
+            }
+            .task {
+                // Sync from HealthKit on first appear
+                await syncFromHealthKit()
+            }
+        }
+    }
+
+    private func syncFromHealthKit() async {
+        guard !isSyncing else { return }
+        isSyncing = true
+        defer { isSyncing = false }
+
+        let count = await syncService.syncWorkouts(modelContext: modelContext)
+        if count > 0 {
+            syncedCount = count
+            print("WorkoutListView: Synced \(count) workouts from HealthKit")
         }
     }
 
