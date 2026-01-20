@@ -187,8 +187,61 @@ public final class StepCountService: @unchecked Sendable {
             }
 
             try modelContext.save()
+
+            // Update streak if goal is met
+            await updateStreakIfGoalMet()
         } catch {
             print("Failed to update daily record: \(error)")
+        }
+    }
+
+    /// Updates the streak if the daily step goal has been met
+    private func updateStreakIfGoalMet() async {
+        guard let modelContext = modelContext else { return }
+
+        // Check if goal is met
+        guard todayStepCount >= dailyGoal else {
+            print("StepCountService: Goal not met (\(todayStepCount)/\(dailyGoal)), streak not updated")
+            return
+        }
+
+        // Fetch or create streak record
+        let streakDescriptor = FetchDescriptor<Streak>(
+            sortBy: [SortDescriptor(\Streak.createdAt, order: .reverse)]
+        )
+
+        do {
+            let streaks = try modelContext.fetch(streakDescriptor)
+            let streak: Streak
+
+            if let existingStreak = streaks.first {
+                streak = existingStreak
+            } else {
+                streak = Streak()
+                modelContext.insert(streak)
+            }
+
+            // Check if streak needs to be broken (missed days)
+            streak.checkAndBreakStreak()
+
+            // Record today's activity (this handles same-day calls gracefully)
+            let previousStreak = streak.currentStreak
+            streak.recordActivity()
+
+            try modelContext.save()
+
+            // Update the local property
+            await MainActor.run {
+                self.currentStreak = streak.currentStreak
+            }
+
+            if streak.currentStreak != previousStreak {
+                print("StepCountService: ✅ Streak updated! \(previousStreak) → \(streak.currentStreak)")
+            } else {
+                print("StepCountService: Streak already recorded for today (\(streak.currentStreak))")
+            }
+        } catch {
+            print("StepCountService: Failed to update streak: \(error)")
         }
     }
 
