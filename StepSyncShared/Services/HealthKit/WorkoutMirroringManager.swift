@@ -55,6 +55,9 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     private var metricsTimer: Timer?
     private var sessionStartDate: Date?
 
+    /// Steps counted before the workout started - used to avoid double-counting in Live Activity progress
+    private var stepsBeforeWorkout: Int = 0
+
     private override init() {
         super.init()
         print("WorkoutMirroringManager: Singleton initialized")
@@ -136,17 +139,21 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
         let dailyGoal = userDefaults?.integer(forKey: "dailyGoal") ?? 10000
         let todaySteps = userDefaults?.integer(forKey: "todayStepCount") ?? 0
 
+        // Store the steps before workout to avoid double-counting
+        // (HealthKit updates todayStepCount in real-time during workouts)
+        stepsBeforeWorkout = todaySteps
+
         let workoutTypeName = currentWorkoutType?.displayName ?? "Workout"
         let workoutIcon = currentWorkoutType?.systemImage ?? "figure.walk"
 
-        print("WorkoutMirroringManager: Starting Live Activity - type: \(workoutTypeName), icon: \(workoutIcon), dailyGoal: \(dailyGoal), todaySteps: \(todaySteps)")
+        print("WorkoutMirroringManager: Starting Live Activity - type: \(workoutTypeName), icon: \(workoutIcon), dailyGoal: \(dailyGoal), stepsBeforeWorkout: \(stepsBeforeWorkout)")
 
         let success = liveActivityManager.startWorkoutActivity(
             workoutType: workoutTypeName,
             workoutIcon: workoutIcon,
             dailyGoal: dailyGoal,
             initialSteps: 0,
-            initialDailySteps: todaySteps
+            initialDailySteps: stepsBeforeWorkout
         )
 
         if success {
@@ -162,11 +169,10 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     private func updateLiveActivity() {
         guard #available(iOS 16.1, *) else { return }
 
-        let userDefaults = UserDefaults(suiteName: appGroupID)
-        let todaySteps = userDefaults?.integer(forKey: "todayStepCount") ?? 0
-
-        // Total daily steps = steps before workout + workout steps
-        let totalDailySteps = todaySteps + stepCount
+        // Use the stored stepsBeforeWorkout to avoid double-counting
+        // (todayStepCount in UserDefaults gets updated by HealthKit during workout,
+        // which would already include the workout steps)
+        let totalDailySteps = stepsBeforeWorkout + stepCount
 
         liveActivityManager.updateWorkoutActivity(
             stepCount: stepCount,
@@ -182,9 +188,8 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
     private func endLiveActivity() {
         guard #available(iOS 16.1, *) else { return }
 
-        let userDefaults = UserDefaults(suiteName: appGroupID)
-        let todaySteps = userDefaults?.integer(forKey: "todayStepCount") ?? 0
-        let totalDailySteps = todaySteps + stepCount
+        // Use the stored stepsBeforeWorkout to avoid double-counting
+        let totalDailySteps = stepsBeforeWorkout + stepCount
 
         liveActivityManager.endWorkoutActivity(
             finalStepCount: stepCount,
@@ -335,6 +340,7 @@ public final class WorkoutMirroringManager: NSObject, @unchecked Sendable {
         averageHeartRate = 0
         currentPace = 0
         isPaused = false
+        stepsBeforeWorkout = 0
     }
 
     private func cleanup() {

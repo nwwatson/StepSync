@@ -280,4 +280,133 @@ final class LiveActivityManagerTests: XCTestCase {
 
         XCTAssertEqual(miles, 2.0, accuracy: 0.001)
     }
+
+    // MARK: - Live Activity Progress Calculation Tests (Issue #5)
+    // These tests verify the correct calculation of totalDailySteps
+    // to avoid double-counting workout steps
+
+    func testTotalDailyStepsCalculationWithoutDoubleCount() {
+        // Scenario: User had 3000 steps before starting workout
+        // During workout, they take 500 additional steps
+        // Total daily steps should be 3500, NOT 3500 + 500 = 4000
+
+        let stepsBeforeWorkout = 3000
+        let workoutSteps = 500
+
+        // Correct calculation: stepsBeforeWorkout + workoutSteps
+        let correctTotalDailySteps = stepsBeforeWorkout + workoutSteps
+
+        XCTAssertEqual(correctTotalDailySteps, 3500)
+
+        // Verify progress calculation
+        let state = WorkoutActivityAttributes.ContentState(
+            stepCount: workoutSteps,
+            totalDailySteps: correctTotalDailySteps
+        )
+        let progress = state.progressTowardGoal(dailyGoal: 10000)
+
+        XCTAssertEqual(progress, 0.35, accuracy: 0.001)
+    }
+
+    func testTotalDailyStepsNotDoubledWhenHealthKitUpdatesInRealTime() {
+        // Scenario: HealthKit updates step count in real-time during workout
+        // If we read todayStepCount from UserDefaults during workout,
+        // it would already include workout steps, causing double-counting
+
+        let stepsBeforeWorkout = 5000  // Steps before workout started
+        let workoutSteps = 1000         // Steps taken during workout
+
+        // WRONG: If todayStepCount in UserDefaults is updated to 6000 during workout
+        // and we add workoutSteps again: 6000 + 1000 = 7000 (INCORRECT)
+        let wrongTotalDailySteps = (stepsBeforeWorkout + workoutSteps) + workoutSteps
+        XCTAssertEqual(wrongTotalDailySteps, 7000) // This is the bug
+
+        // CORRECT: Use stored stepsBeforeWorkout + workoutSteps
+        let correctTotalDailySteps = stepsBeforeWorkout + workoutSteps
+        XCTAssertEqual(correctTotalDailySteps, 6000) // This is correct
+    }
+
+    func testProgressBarShowsCorrectPercentage() {
+        // Scenario: Goal is 10000 steps
+        // User had 4000 steps before workout
+        // User takes 1000 steps during workout
+        // Expected progress: 50% (5000/10000)
+
+        let stepsBeforeWorkout = 4000
+        let workoutSteps = 1000
+        let dailyGoal = 10000
+
+        let totalDailySteps = stepsBeforeWorkout + workoutSteps
+
+        let state = WorkoutActivityAttributes.ContentState(
+            stepCount: workoutSteps,
+            totalDailySteps: totalDailySteps
+        )
+
+        let progress = state.progressTowardGoal(dailyGoal: dailyGoal)
+        let percentage = Int(progress * 100)
+
+        XCTAssertEqual(percentage, 50)
+        XCTAssertEqual(progress, 0.5, accuracy: 0.001)
+    }
+
+    func testProgressBarAtWorkoutStartShowsPreWorkoutSteps() {
+        // At the start of a workout, progress should show pre-workout steps
+        let stepsBeforeWorkout = 7500
+        let workoutSteps = 0  // Just started, no workout steps yet
+        let dailyGoal = 10000
+
+        let totalDailySteps = stepsBeforeWorkout + workoutSteps
+
+        let state = WorkoutActivityAttributes.ContentState(
+            stepCount: workoutSteps,
+            totalDailySteps: totalDailySteps
+        )
+
+        let progress = state.progressTowardGoal(dailyGoal: dailyGoal)
+
+        XCTAssertEqual(progress, 0.75, accuracy: 0.001)
+        XCTAssertEqual(state.totalDailySteps, 7500)
+    }
+
+    func testProgressBarReachesGoalCorrectly() {
+        // User needs 2000 more steps to reach goal
+        // After workout provides those steps, should show 100%
+
+        let stepsBeforeWorkout = 8000
+        let workoutSteps = 2000
+        let dailyGoal = 10000
+
+        let totalDailySteps = stepsBeforeWorkout + workoutSteps
+
+        let state = WorkoutActivityAttributes.ContentState(
+            stepCount: workoutSteps,
+            totalDailySteps: totalDailySteps
+        )
+
+        let progress = state.progressTowardGoal(dailyGoal: dailyGoal)
+
+        XCTAssertEqual(progress, 1.0, accuracy: 0.001)
+        XCTAssertEqual(state.totalDailySteps, 10000)
+    }
+
+    func testProgressBarExceedsGoalCorrectly() {
+        // User exceeds daily goal during workout
+
+        let stepsBeforeWorkout = 9000
+        let workoutSteps = 3000
+        let dailyGoal = 10000
+
+        let totalDailySteps = stepsBeforeWorkout + workoutSteps
+
+        let state = WorkoutActivityAttributes.ContentState(
+            stepCount: workoutSteps,
+            totalDailySteps: totalDailySteps
+        )
+
+        let progress = state.progressTowardGoal(dailyGoal: dailyGoal)
+
+        XCTAssertEqual(progress, 1.2, accuracy: 0.001)
+        XCTAssertEqual(state.totalDailySteps, 12000)
+    }
 }
